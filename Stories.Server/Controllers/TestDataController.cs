@@ -10,12 +10,28 @@ namespace Stories.Server.Controllers;
 [Route("api/testdata")]
 public class TestDataController
 {
-    private readonly IMovieRepository _movieRepository;
+    private readonly IFamilyRepository _familyRepository;
 
-    public TestDataController(IMovieRepository movieRepository)
+    public TestDataController(IFamilyRepository familyRepository)
     {
-        _movieRepository = movieRepository;
+        _familyRepository = familyRepository;
     }
 
-    
+    [HttpGet("familytree")]
+    public Task<FamilyTree> GetFamilyTree()
+    {
+        return _familyRepository.GetFamilyTree();
+    }
+
+    [HttpPost("familytree")]
+    public Task PostFamilyTree()
+    {
+        return _familyRepository.PopulateFamilyTreeData();
+    }
+    [HttpDelete("familytree")]
+    public Task DeleteFamilyTree()
+    {
+        return _familyRepository.DeleteAllFamilyTreeData();
+    }
+
 }

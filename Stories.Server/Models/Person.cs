@@ -5,6 +5,13 @@ using System.ComponentModel.DataAnnotations;
 
 public class Person
 {
+    public Person(int personID, string name, DateTime birthday)
+    {
+        PersonID = personID;
+        Name = name;
+        Birthday = birthday;
+    }
+
     [Key] // This attribute marks PersonID as the primary key
     public int PersonID { get; set; }
 

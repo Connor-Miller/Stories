@@ -10,9 +10,9 @@ namespace Stories.Server.Controllers;
 [Route("search")]
 public class SearchController
 {
-    private readonly IMovieRepository _movieRepository;
+    private readonly IFamilyRepository _movieRepository;
 
-    public SearchController(IMovieRepository movieRepository)
+    public SearchController(IFamilyRepository movieRepository)
     {
         _movieRepository = movieRepository;
     }
@@ -20,6 +20,8 @@ public class SearchController
     [HttpGet]
     public Task<List<Movie>> SearchMovies([FromQuery(Name = "q")] string search)
     {
-        return _movieRepository.Search(search);
+        //return _movieRepository.Search(search);
+
+        return null;
     }
 }

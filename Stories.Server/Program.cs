@@ -1,10 +1,7 @@
-// PW for Instance01 of neo4j
-// Username: neo4j
-// QPwm6n1YRSNovOMe89cc2zPrJ5jRncDNgBW3qzU7SQI
-
 using Microsoft.Extensions.Configuration;
 using Neo4j.Driver;
 using Stories.Server.Models;
+using Stories.Server.Repositories;
 using System.Runtime;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IFamilyRepository, FamilyRepository>();
 builder.Services.AddSingleton(GraphDatabase.Driver(
             mySettings.BaseURI,
             AuthTokens.Basic(

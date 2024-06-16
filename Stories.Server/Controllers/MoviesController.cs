@@ -9,9 +9,9 @@ namespace Stories.Server.Controllers;
 [Route("movie")]
 public class MoviesController : ControllerBase
 {
-    private readonly IMovieRepository _movieRepository;
+    private readonly IFamilyRepository _movieRepository;
 
-    public MoviesController(IMovieRepository movieRepository)
+    public MoviesController(IFamilyRepository movieRepository)
     {
         _movieRepository = movieRepository;
     }
@@ -24,7 +24,9 @@ public class MoviesController : ControllerBase
             return null;
 
         title = System.Net.WebUtility.UrlDecode(title);
-        return _movieRepository.FindByTitle(title);
+        //return _movieRepository.FindByTitle(title);
+
+        return null;
     }
 
     [Route("{title}/vote")]
@@ -32,6 +34,8 @@ public class MoviesController : ControllerBase
     public Task<int> VoteInMovie([FromRoute] string title)
     {
         title = System.Net.WebUtility.UrlDecode(title);
-        return _movieRepository.VoteByTitle(title);
+        //return _movieRepository.VoteByTitle(title);
+
+        return null;
     }
 }

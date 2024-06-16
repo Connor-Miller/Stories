@@ -10,9 +10,9 @@ namespace Stories.Server.Controllers;
 [Route("graph")]
 public class GraphController
 {
-    private readonly IMovieRepository _movieRepository;
+    private readonly IFamilyRepository _movieRepository;
 
-    public GraphController(IMovieRepository movieRepository)
+    public GraphController(IFamilyRepository movieRepository)
     {
         _movieRepository = movieRepository;
     }
@@ -20,6 +20,8 @@ public class GraphController
     [HttpGet]
     public Task<D3Graph> FetchD3Graph([FromQuery] int limit)
     {
-        return _movieRepository.FetchD3Graph(limit <= 0 ? 50 : limit);
+        //return _movieRepository.FetchD3Graph(limit <= 0 ? 50 : limit);
+
+        return null;
     }
 }
