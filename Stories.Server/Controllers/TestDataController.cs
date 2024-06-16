@@ -34,4 +34,15 @@ public class TestDataController
         return _familyRepository.DeleteAllFamilyTreeData();
     }
 
+    [HttpGet("descendants/{id}")]
+    public Task<List<Person>> GetDescendants(int id)
+    {
+        return _familyRepository.GetDescendants(id);
+    }
+    [HttpGet("ancestors/{id}")]
+    public Task<List<Person>> GetAncestors(int id)
+    {
+        return _familyRepository.GetAncestors(id);
+    }
+
 }

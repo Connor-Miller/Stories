@@ -18,6 +18,8 @@ public interface IFamilyRepository
     Task PopulateFamilyTreeData();
     Task<FamilyTree> GetFamilyTree();
     Task DeleteAllFamilyTreeData();
+    Task<List<Person>> GetAncestors(int personID);
+    Task<List<Person>> GetDescendants(int personID);
 
 }
 
@@ -205,6 +207,81 @@ public class FamilyRepository : IFamilyRepository
 
         return familyTree;
     }
+    public async Task<List<Person>> GetAncestors(int personID)
+    {
+        var ancestors = new List<Person>();
+
+        using var session = _driver.AsyncSession();
+        try
+        {
+            var query = @"
+            MATCH (person:Person {PersonID: $personID})
+            OPTIONAL MATCH (person)-[:FATHER|MOTHER*]->(ancestor:Person)
+            RETURN DISTINCT ancestor";
+
+            var result = await session.RunAsync(query, new { personID });
+
+            var records = await result.ToListAsync();
+
+            foreach (var record in records)
+            {
+                if (record["ancestor"] == null) continue;
+
+                var ancestorNode = record["ancestor"].As<INode>();
+                var ancestor = new Person(
+                    ancestorNode.Properties["PersonID"].As<int>(),
+                    ancestorNode.Properties["Name"].As<string>(),
+                    DateTime.Parse(ancestorNode.Properties["Birthday"].As<string>())
+                );
+
+                ancestors.Add(ancestor);
+            }
+        }
+        finally
+        {
+            await session.CloseAsync();
+        }
+
+        return ancestors;
+    }
+    public async Task<List<Person>> GetDescendants(int personID)
+    {
+        var descendants = new List<Person>();
+
+        using var session = _driver.AsyncSession();
+        try
+        {
+            var query = @"
+            MATCH (person:Person {PersonID: $personID})
+            OPTIONAL MATCH (person)<-[:FATHER|MOTHER*]-(descendant:Person)
+            RETURN DISTINCT descendant";
+
+            var result = await session.RunAsync(query, new { personID });
+
+            var records = await result.ToListAsync();
+
+            foreach (var record in records)
+            {
+                if (record["descendant"] == null) continue;
+
+                var descendantNode = record["descendant"].As<INode>();
+                var descendant = new Person(
+                    descendantNode.Properties["PersonID"].As<int>(),
+                    descendantNode.Properties["Name"].As<string>(),
+                    DateTime.Parse(descendantNode.Properties["Birthday"].As<string>())
+                );
+
+                descendants.Add(descendant);
+            }
+        }
+        finally
+        {
+            await session.CloseAsync();
+        }
+
+        return descendants;
+    }
+
 
 
 
