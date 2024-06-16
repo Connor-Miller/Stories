@@ -2,11 +2,20 @@
 // Username: neo4j
 // QPwm6n1YRSNovOMe89cc2zPrJ5jRncDNgBW3qzU7SQI
 
+using Microsoft.Extensions.Configuration;
 using Neo4j.Driver;
+using Stories.Server.Models;
+using System.Runtime;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var mySettings = new Neo4jSettings();
+builder.Configuration.GetSection("Neo4j").Bind(mySettings);
+
+// Register the settings object with the dependency injection container
+builder.Services.Configure<Neo4jSettings>(builder.Configuration.GetSection("Neo4j"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -14,10 +23,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton(GraphDatabase.Driver(
-            Environment.GetEnvironmentVariable("NEO4J_URI") ?? "neo4j+s://demo.neo4jlabs.com",
+            mySettings.BaseURI,
             AuthTokens.Basic(
-                Environment.GetEnvironmentVariable("NEO4J_USER") ?? "movies", 
-                Environment.GetEnvironmentVariable("NEO4J_PASSWORD") ?? "movies"
+                mySettings.Username, 
+                mySettings.Password
             )
         ));
 
