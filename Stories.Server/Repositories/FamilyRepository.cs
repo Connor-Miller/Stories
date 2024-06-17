@@ -20,6 +20,7 @@ public interface IFamilyRepository
     Task DeleteAllFamilyTreeData();
     Task<List<Person>> GetAncestors(int personID);
     Task<List<Person>> GetDescendants(int personID);
+    Task AddPersonWithRelationships(Person person, List<Relationship> relationships);
 
 }
 
@@ -189,7 +190,7 @@ public class FamilyRepository : IFamilyRepository
                         familyTree.Persons.Add(relatedPerson);
                     }
 
-                    var relationship = new FamilyTree.Relationship
+                    var relationship = new Relationship
                     {
                         From = person.PersonID,
                         To = relatedPerson.PersonID,
@@ -280,6 +281,34 @@ public class FamilyRepository : IFamilyRepository
         }
 
         return descendants;
+    }
+    public async Task AddPersonWithRelationships(Person person, List<Relationship> relationships)
+    {
+        using var session = _driver.AsyncSession();
+        try
+        {
+            // Create the person node
+            await session.RunAsync(
+                "CREATE (p:Person {PersonID: $PersonID, Name: $Name, Birthday: $Birthday})",
+                new { person.PersonID, person.Name, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
+            );
+
+            // Create relationships
+            foreach (var relationship in relationships)
+            {
+                await session.RunAsync(
+                    $@"
+                MATCH (a:Person {{PersonID: $PersonID}})
+                MATCH (b:Person {{PersonID: $RelatedPersonID}})
+                CREATE (a)-[:{relationship.Type}]->(b)",
+                    new { PersonID = person.PersonID, RelatedPersonID = relationship.To }
+                );
+            }
+        }
+        finally
+        {
+            await session.CloseAsync();
+        }
     }
 
 
