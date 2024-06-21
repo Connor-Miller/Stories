@@ -20,6 +20,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IFamilyRepository, FamilyRepository>();
+builder.Services.AddScoped<IStoryRepository, StoryRepository>();
+
 builder.Services.AddSingleton(GraphDatabase.Driver(
             mySettings.BaseURI,
             AuthTokens.Basic(

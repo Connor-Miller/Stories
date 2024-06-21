@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Stories.Server.Models;
 using Stories.Server.Repositories;
 
@@ -7,12 +6,12 @@ using Stories.Server.Repositories;
 namespace Stories.Server.Controllers;
 
 [ApiController]
-[Route("api/testdata")]
-public class TestDataController
+[Route("api/[Controller]")]
+public class FamilyController
 {
     private readonly IFamilyRepository _familyRepository;
 
-    public TestDataController(IFamilyRepository familyRepository)
+    public FamilyController(IFamilyRepository familyRepository)
     {
         _familyRepository = familyRepository;
     }
@@ -43,6 +42,11 @@ public class TestDataController
     public Task<List<Person>> GetAncestors(int id)
     {
         return _familyRepository.GetAncestors(id);
+    }
+    [HttpPost("person")]
+    public Task AddPerson(Person person, List<Relationship> relationships)
+    {
+        return _familyRepository.AddPersonWithRelationships(person, relationships);
     }
 
 }
