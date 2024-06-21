@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stories.Server.Models;
+using Stories.Server.Models.Requests;
 using Stories.Server.Repositories;
 
 
@@ -44,9 +45,9 @@ public class FamilyController
         return _familyRepository.GetAncestors(id);
     }
     [HttpPost("person")]
-    public Task AddPerson(Person person, List<Relationship> relationships)
+    public Task AddPerson(PersonRequest personRequest)
     {
-        return _familyRepository.AddPersonWithRelationships(person, relationships);
+        return _familyRepository.AddPersonWithRelationships(personRequest.person, personRequest.relationships);
     }
 
 }

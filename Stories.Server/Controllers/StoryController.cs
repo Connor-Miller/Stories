@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stories.Server.Models;
+using Stories.Server.Models.Requests;
 using Stories.Server.Repositories;
 
 
@@ -17,9 +18,9 @@ public class StoryController
     }
 
     [HttpPost("story")]
-    public Task AddStory(Story story, int personID, List<string> tagNames)
+    public Task AddStory(StoryReqeust storyRequest)
     {
-        if (story == null)
+        if (storyRequest == null)
         {
             var newStory = new Story(1, DateTime.Now, "New York", "Here is the story text. It will be longer eventually.");
             var tags = new List<string> { "Family Reunion", "Holiday" };
@@ -28,7 +29,7 @@ public class StoryController
 
         }
 
-        return _storyRepository.AddStoryWithRelationships(story, personID, tagNames);
+        return _storyRepository.AddStoryWithRelationships(storyRequest.story, storyRequest.personID, storyRequest.tagNames);
     }
     [HttpGet("story")]
     public Task<Story> GetStory(int storyID) 
@@ -41,7 +42,7 @@ public class StoryController
         return _storyRepository.DeleteStory(storyID);
     }
     [HttpGet("stories")]
-    public Task<List<Story>> GetStories([FromQuery] StoryRequest request)
+    public Task<List<Story>> GetStories([FromQuery] StoryListRequest request)
     {
         return _storyRepository.GetStories(request);
     }

@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Neo4j.Driver;
 using Stories.Server.Models;
+using Stories.Server.Models.Requests;
 
 namespace Stories.Server.Repositories;
 
@@ -18,7 +19,7 @@ public interface IStoryRepository
     Task AddStoryWithRelationships(Story story, int personID, List<string> tagNames);
     Task<Story> GetStory(int storyID);
     Task<bool> DeleteStory(int storyID);
-    Task<List<Story>> GetStories(StoryRequest storyRequest);
+    Task<List<Story>> GetStories(StoryListRequest storyRequest);
 
 }
 
@@ -161,7 +162,7 @@ public class StoryRepository : IStoryRepository
         }
     }
 
-    public async Task<List<Story>> GetStories(StoryRequest request)
+    public async Task<List<Story>> GetStories(StoryListRequest request)
     {
         using var session = _driver.AsyncSession();
         var query = new List<string>();

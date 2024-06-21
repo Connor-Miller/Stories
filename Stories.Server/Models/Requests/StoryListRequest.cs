@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Stories.Server.Models
+namespace Stories.Server.Models.Requests
 {
-    public class StoryRequest
+    public class StoryListRequest
     {
         [FromQuery]
         public string? Name { get; set; }
