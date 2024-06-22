@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import './App.css';
 
 interface Forecast {
@@ -17,7 +17,7 @@ function App() {
 
     const contents = forecasts === undefined
         ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table table-striped" aria-labelledby="tabelLabel">
+        : <table className="table-striped table" aria-labelledby="tabelLabel">
             <thead>
                 <tr>
                     <th>Date</th>
@@ -42,7 +42,7 @@ function App() {
         <div>
             <h1 id="tabelLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
-            <h1 className="text-3xl font-bold underline">
+            <h1 className="text-3xl bg-amber-300 underline">
                 Hello world!
             </h1>
             {contents}

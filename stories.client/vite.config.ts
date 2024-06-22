@@ -7,6 +7,10 @@ import path from 'path';
 import child_process from 'child_process';
 import { env } from 'process';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import tailwindcss from "tailwindcss";
+
+
 const baseFolder =
     env.APPDATA !== undefined && env.APPDATA !== ''
         ? `${env.APPDATA}/ASP.NET/https`
