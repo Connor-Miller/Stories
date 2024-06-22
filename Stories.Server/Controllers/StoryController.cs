@@ -23,7 +23,7 @@ public class StoryController
         if (storyRequest == null)
         {
             var newStory = new Story(1, DateTime.Now, "New York", "Here is the story text. It will be longer eventually.");
-            var tags = new List<string> { "Family Reunion", "Holiday" };
+            var tags = new List<string> { "Family Reunion", "Holiday", "Test Tag" };
 
             return _storyRepository.AddStoryWithRelationships(newStory, 7, tags);
 
@@ -40,6 +40,11 @@ public class StoryController
     public Task DeleteStory(int storyID)
     {
         return _storyRepository.DeleteStory(storyID);
+    }
+    [HttpPut("story")]
+    public Task UpdateStory(Story story)
+    {
+        return _storyRepository.UpdateStory(story);
     }
     [HttpGet("stories")]
     public Task<List<Story>> GetStories([FromQuery] StoryListRequest request)

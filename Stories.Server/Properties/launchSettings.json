@@ -22,7 +22,7 @@
         "NEO4J_USER": "movies",
         "NEO4J_PASSWORD": "movies",
         "NEO4J_DATABASE": "movies",
-        "NEO4J_VERSION": "4",
+        "NEO4J_VERSION": "5",
         "PORT": "8080"
       }
     },
@@ -39,7 +39,7 @@
         "NEO4J_USER": "movies",
         "NEO4J_PASSWORD": "movies",
         "NEO4J_DATABASE": "movies",
-        "NEO4J_VERSION": "4",
+        "NEO4J_VERSION": "5",
         "PORT": "8080"
       }
     },
@@ -54,7 +54,7 @@
         "NEO4J_USER": "movies",
         "NEO4J_PASSWORD": "movies",
         "NEO4J_DATABASE": "movies",
-        "NEO4J_VERSION": "4",
+        "NEO4J_VERSION": "5",
         "PORT": "8080"
       }
     }

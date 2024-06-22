@@ -78,6 +78,7 @@ public class FamilyRepository : IFamilyRepository
         // Spouse relationships
         (1, 2, "SPOUSE"),
         (3, 4, "SPOUSE"),
+        (5, 6, "SPOUSE"),
         (7, 8, "SPOUSE"),
         (9, 10, "SPOUSE"),
 

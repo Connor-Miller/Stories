@@ -19,6 +19,7 @@ public interface IStoryRepository
     Task AddStoryWithRelationships(Story story, int personID, List<string> tagNames);
     Task<Story> GetStory(int storyID);
     Task<bool> DeleteStory(int storyID);
+    Task<bool> UpdateStory(Story story);
     Task<List<Story>> GetStories(StoryListRequest storyRequest);
 
 }
@@ -153,6 +154,39 @@ public class StoryRepository : IStoryRepository
         catch (Exception ex)
         {
             // Handle any errors that might occur during the deletion process
+            Console.WriteLine($"An error occurred: {ex.Message}");
+            return false;
+        }
+        finally
+        {
+            await session.CloseAsync();
+        }
+    }
+    public async Task<bool> UpdateStory(Story updatedStory)
+    {
+        using var session = _driver.AsyncSession();
+        try
+        {
+            var result = await session.RunAsync(
+                @"
+            MATCH (s:Story {StoryID: $StoryID})
+            SET s.Location = $Location, s.Date = $Date, s.StoryText = $StoryText
+            RETURN s",
+                new
+                {
+                    Location = updatedStory.Location,
+                    Date = updatedStory.Date.ToString("yyyy-MM-dd"), // Format date as needed
+                    StoryText = updatedStory.StoryText
+                }
+            );
+
+            var record = await result.SingleAsync();
+
+            return record != null;
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors that might occur during the update process
             Console.WriteLine($"An error occurred: {ex.Message}");
             return false;
         }
