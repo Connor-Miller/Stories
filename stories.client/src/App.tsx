@@ -1,12 +1,20 @@
 ﻿import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import './App.css';
-import FamilyTree from './pages/familyTree/FamilyTree';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
+import './App.css';
 
-import { MantineProvider } from '@mantine/core';
+
+import {
+    AppShell,
+    Burger,
+    Group,
+    MantineProvider
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Router } from './Router';
+import { Navbar } from './components/Navbar/Navbar';
 
 
 function App() {
@@ -18,30 +26,42 @@ function App() {
             },
         },
     })
+    const [opened, { toggle }] = useDisclosure();
+
 
     return (
         <MantineProvider>
             <QueryClientProvider client={queryClient}>
-                <MainApp />
+
+                <AppShell
+                    header={{ height: 60 }}
+                    navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+                    padding="md"
+                >
+                    <AppShell.Header>
+                        <Group h="100%" px="md">
+                            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                        </Group>
+                    </AppShell.Header>
+                    <AppShell.Navbar p="md">
+                        <Navbar />
+                    </AppShell.Navbar>
+                    <AppShell.Main>
+                        <Router />
+                    </AppShell.Main>
+                </AppShell>
+
+                {/*<div className="main-app">*/}
+                {/*    <Navbar />*/}
+                {/*    <Router />*/}
+                {/*</div>*/}
+                
                 <ReactQueryDevtools />
             </QueryClientProvider>
         </MantineProvider>
         
     );
 
-}
-
-function MainApp() {
-
-
-    return (
-        <div className="App">
-            <header className="App-header">
-                <h1 className="text-4xl font-bold my-8">Family Tree</h1>
-                <FamilyTree />
-            </header>
-        </div>
-    );
 }
 
 export default App;
