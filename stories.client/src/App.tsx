@@ -1,59 +1,47 @@
-﻿import { useEffect, useState } from 'react';
+﻿import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css';
+import FamilyTree from './pages/familyTree/FamilyTree';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
 
-interface Forecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
-}
+import { MantineProvider } from '@mantine/core';
+
 
 function App() {
-    const [forecasts, setForecasts] = useState<Forecast[]>();
 
-    useEffect(() => {
-        populateWeatherData();
-    }, []);
-
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table-striped table" aria-labelledby="tabelLabel">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>;
+    const queryClient = new QueryClient({
+        defaultOptions: {
+            queries: {
+                staleTime: Infinity,
+            },
+        },
+    })
 
     return (
-        <div>
-            <h1 id="tabelLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            <h1 className="text-3xl bg-amber-300 underline">
-                Hello world!
-            </h1>
-            {contents}
-        </div>
+        <MantineProvider>
+            <QueryClientProvider client={queryClient}>
+                <MainApp />
+                <ReactQueryDevtools />
+            </QueryClientProvider>
+        </MantineProvider>
+        
     );
 
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        setForecasts(data);
-    }
+}
+
+function MainApp() {
+
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <h1 className="text-4xl font-bold my-8">Family Tree</h1>
+                <FamilyTree />
+            </header>
+        </div>
+    );
 }
 
 export default App;

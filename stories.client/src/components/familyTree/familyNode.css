@@ -1,0 +1,92 @@
+
+.family-node {
+    position: relative;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.family-node::before,
+.family-node::after {
+    content: '';
+    position: absolute;
+    top: -1rem;
+    width: 50%;
+    height: 2rem;
+}
+
+.family-node::before {
+    left: 0%;
+
+}
+
+.family-node::after {
+    right: 0%;
+
+}
+
+.family-node > .family-node {
+    margin-top: 2rem;
+}
+
+.family-node:first-child::before,
+.family-node:last-child::after {
+    border: none;
+}
+
+.family-node-right {
+    left: -2rem;
+
+}
+
+.family-node-name {
+    height: 75px;
+    width: 200px;
+}
+
+.connector-bottom {
+    position: absolute;
+    top: 5.7rem; /* Adjust based on the connector length */
+    left: 50%;
+    width: 2px;
+    height: 1.75rem; /* Adjust based on the connector length */
+    background-color: #ccc;
+}
+.connector-left-vert {
+    position: absolute;
+    top: 0.7rem; /* Adjust based on the connector length */
+    left: 50%;
+    width: 2px;
+    height: 1.25rem; /* Adjust based on the connector length */
+    background-color: #ccc;
+    border-radius: 5px;
+}
+.connector-left-hori {
+    position: absolute;
+    top: 0.7rem; /* Adjust based on the connector length */
+    left: 50%;
+    height: 2px;
+    width: 50%; /* Adjust based on the connector length */
+    background-color: #ccc;
+    border-radius: 5px;
+}
+.connector-right-vert {
+    position: absolute;
+    top: 0.7rem; /* Adjust based on the connector length */
+    left: 50%;
+    width: 2px;
+    height: 1.25rem; /* Adjust based on the connector length */
+    background-color: #ccc;
+    border-radius: 5px;
+}
+
+.connector-right-hori {
+    position: absolute;
+    top: 0.7rem; /* Adjust based on the connector length */
+    right: 50%;
+    height: 2px;
+    width: 50%; /* Adjust based on the connector length */
+    background-color: #ccc;
+    border-radius: 5px;
+}

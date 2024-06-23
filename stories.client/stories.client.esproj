@@ -9,9 +9,11 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\components\" />
+    <Folder Include="src\components\familyTree\" />
+    <Folder Include="src\components\familyDirectory\" />
     <Folder Include="src\data\" />
+    <Folder Include="src\pages\familyTree\" />
+    <Folder Include="src\pages\familyDirectory\" />
     <Folder Include="src\theme\" />
-    <Folder Include="src\pages\" />
   </ItemGroup>
 </Project>
