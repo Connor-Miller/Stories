@@ -558,11 +558,6 @@ video {
   position: relative;
 }
 
-.my-8 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
 .mt-4 {
   margin-top: 1rem;
 }
@@ -607,11 +602,6 @@ video {
 
 .p-2\.5 {
   padding: 0.625rem;
-}
-
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
 }
 
 .font-bold {

@@ -1,8 +1,18 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import FamilyTree from './pages/familyTree/FamilyTree';
 import { HomePage } from './pages/HomePage';
 
-const router = createBrowserRouter([
+//const router = createBrowserRouter([
+//    {
+//        path: '/',
+//        element: <HomePage />,
+//    },
+//    {
+//        path: '/tree',
+//        element: <FamilyTree />,
+//    },
+//]);
+const router = [
     {
         path: '/',
         element: <HomePage />,
@@ -11,14 +21,19 @@ const router = createBrowserRouter([
         path: '/tree',
         element: <FamilyTree />,
     },
-]);
+];
 
 export function Router() {
     return (
         <div className="main-content">
-            <RouterProvider
-                router={router}
-            />
+            <Routes>
+                {router.map((route: any) => (
+                    <Route path={route.path} element={route.element} key={route.path } />
+                ))}
+            </Routes>
+            {/*<RouterProvider*/}
+            {/*    router={router}*/}
+            {/*/>*/}
         </div>
         
     )

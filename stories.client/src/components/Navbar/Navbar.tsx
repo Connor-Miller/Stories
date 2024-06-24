@@ -1,4 +1,4 @@
-import { Code, Group, NavLink } from '@mantine/core';
+import { Code, Group } from '@mantine/core';
 import {
     IconHome,
     IconLogout,
@@ -9,8 +9,8 @@ import {
     IconTree
 } from '@tabler/icons-react';
 import { useState } from 'react';
-import classes from './Navbar.module.css';
 import { Link } from 'react-router-dom';
+import classes from './Navbar.module.css';
 
 const data = [
     { link: '/', label: 'Home', icon: IconHome },
@@ -21,19 +21,23 @@ const data = [
 ];
 
 export function Navbar() {
-    const [active, setActive] = useState('Billing');
+    const [active, setActive] = useState('Home');
 
     const links = data.map((item) => (
-        <a
-            key={item.label}
-            onClick={() => {
-                setActive(item.label)
-                window.location.href = item.link
-            }}
-        >
-            <item.icon className={classes.linkIcon} stroke={1.5} />
-            <span>{item.label}</span>
-        </a>
+            <Link
+                className={classes.link}
+                data-active={item.label === active || undefined}
+                to={item.link}
+                key={item.label}
+                onClick={() => {
+                    setActive(item.label);
+                    //window.location.href = item.link;
+                }}
+            >
+                <item.icon className={classes.linkIcon} stroke={1.5} />
+                <span>{item.label}</span>
+            </Link>
+        
     ));
 
     return (
