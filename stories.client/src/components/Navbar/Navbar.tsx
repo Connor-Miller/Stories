@@ -31,7 +31,6 @@ export function Navbar() {
                 key={item.label}
                 onClick={() => {
                     setActive(item.label);
-                    //window.location.href = item.link;
                 }}
             >
                 <item.icon className={classes.linkIcon} stroke={1.5} />

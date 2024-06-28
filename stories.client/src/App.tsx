@@ -51,14 +51,7 @@ function App() {
                             <Router />
                         </AppShell.Main>
                     </AppShell>
-                </BrowserRouter>
-                
-
-                {/*<div className="main-app">*/}
-                {/*    <Navbar />*/}
-                {/*    <Router />*/}
-                {/*</div>*/}
-                
+                </BrowserRouter>               
                 <ReactQueryDevtools />
             </QueryClientProvider>
         </MantineProvider>
