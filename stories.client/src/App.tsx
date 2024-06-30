@@ -8,14 +8,13 @@ import './App.css';
 
 import {
     AppShell,
-    Burger,
-    Group,
     MantineProvider
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Router } from './Router';
-import { Navbar } from './components/Navbar/Navbar';
 import { BrowserRouter } from 'react-router-dom';
+import { Router } from './Router';
+import Header from './components/Header/Header';
+import { Navbar } from './components/Navbar/Navbar';
 
 
 function App() {
@@ -40,9 +39,7 @@ function App() {
                         padding="md"
                     >
                         <AppShell.Header>
-                            <Group h="100%" px="md">
-                                <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                            </Group>
+                            <Header opened={opened} toggle={toggle} />
                         </AppShell.Header>
                         <AppShell.Navbar p="md">
                             <Navbar />

@@ -20,3 +20,55 @@ th, td {
 .main-app {
     display: flex;
 }
+
+
+/* Color Theme Swatches in Hex */
+.Stories-1-hex {
+    color: #C2BAEB;
+}
+
+.Stories-2-hex {
+    color: #00705B;
+}
+
+.Stories-3-hex {
+    color: #E6D8B6;
+}
+
+.Stories-4-hex {
+    color: #665734;
+}
+
+.Stories-5-hex {
+    color: #48486B;
+}
+
+.Stories-6-hex {
+    color: #4A5C66;
+}
+
+/* Color Theme Swatches in RGBA */
+.Stories-1-rgba {
+    color: rgba(194, 186, 235, 1);
+}
+
+.Stories-2-rgba {
+    color: rgba(0, 112, 91, 1);
+}
+
+.Stories-3-rgba {
+    color: rgba(230, 216, 182, 1);
+}
+
+.Stories-4-rgba {
+    color: rgba(102, 87, 52, 1);
+}
+
+.Stories-5-rgba {
+    color: rgba(72, 72, 107, 1);
+}
+
+.Stories-6-rgba {
+    color: rgba(74, 92, 102, 1);
+}
+
