@@ -36,15 +36,15 @@ function App() {
                     <AppShell
                         header={{ height: 60 }}
                         navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-                        padding="md"
+                        padding={0}
                     >
                         <AppShell.Header>
                             <Header opened={opened} toggle={toggle} />
                         </AppShell.Header>
-                        <AppShell.Navbar p="md">
+                        <AppShell.Navbar>
                             <Navbar />
                         </AppShell.Navbar>
-                        <AppShell.Main>
+                        <AppShell.Main className="main-app">
                             <Router />
                         </AppShell.Main>
                     </AppShell>

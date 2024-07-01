@@ -1,9 +1,36 @@
+/* DiscoverFamily.css */
 .family-background {
     height: 500px;
-    width: 100%;
+    width: 100vw; /* Full viewport width */
     background-image: url('/family1.png');
     background-size: cover;
     background-position: center;
     position: relative; /* Ensures the clip-path works correctly */
     clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); /* Adjust the percentage values to change the angle */
+    margin: 0; /* Remove any default margin */
+    padding: 0; /* Remove any default padding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    padding: 20px;
+    margin: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space out the elements within the card */
+}
+
+.card-title {
+    padding: 10px;
+}
+.card-subtitle {
+    padding: 20px;
+}
+.card-button {
+    width: auto;
 }

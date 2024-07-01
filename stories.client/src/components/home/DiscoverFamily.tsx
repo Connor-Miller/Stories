@@ -1,16 +1,21 @@
-import { useState } from 'react';
-
+import { Button, Card, Text, Title } from '@mantine/core';
+import { IconChevronRight } from '@tabler/icons-react';
 import './DiscoverFamily.css';
 
 const DiscoverFamily: React.FC = () => {
 
-    const [value, setValue] = useState('');
-
 
     return (
-        <div className="family-background">
-
-        </div>
+            <div className="family-background">
+                <Card className="overlay-card" shadow="sm" padding="lg">
+                    <Title className="card-title" order={1}>Capture your family's story</Title>
+                    <Text className="card-subtitle" size="lg">Every family deserves to know their story.</Text>
+                    <Button className="card-button">
+                        Get Started
+                        <IconChevronRight />
+                    </Button>
+                </Card>
+            </div>
     );
 }
 
