@@ -1,11 +1,13 @@
 import { ColorSchemeToggle } from "../components/home/ColorSchemeToggle";
-import { Welcome } from "../components/home/Welcome";
+import DiscoverFamily from "../components/home/DiscoverFamily";
+
+import './HomePage.css'
 
 export function HomePage() {
     return (
-        <>
-            <Welcome />
+        <div className="home">
+            <DiscoverFamily />
             <ColorSchemeToggle />
-        </>
+        </div>            
     );
 }

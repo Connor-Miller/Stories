@@ -1,0 +1,9 @@
+.family-background {
+    height: 500px;
+    width: 100%;
+    background-image: url('/family1.png');
+    background-size: cover;
+    background-position: center;
+    position: relative; /* Ensures the clip-path works correctly */
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); /* Adjust the percentage values to change the angle */
+}
