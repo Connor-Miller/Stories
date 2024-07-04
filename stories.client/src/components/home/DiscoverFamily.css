@@ -19,6 +19,7 @@
     background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
     padding: 20px;
     margin: 20px;
+    margin-right: 40px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -27,6 +28,17 @@
 
 .card-title {
     padding: 10px;
+    font-family: Greycliff CF, var(--mantine-font-family);
+    font-size: rem(62px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 0;
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+
+    @media (max-width: $mantine-breakpoint-sm) {
+        font-size: rem(42px);
+        line-height: 1.2;
+    }
 }
 .card-subtitle {
     padding: 20px;

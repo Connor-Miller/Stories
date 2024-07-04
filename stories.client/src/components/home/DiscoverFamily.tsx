@@ -10,7 +10,11 @@ const DiscoverFamily: React.FC = () => {
                 <Card className="overlay-card" shadow="sm" padding="lg">
                     <Title className="card-title" order={1}>Capture your family's story</Title>
                     <Text className="card-subtitle" size="lg">Every family deserves to know their story.</Text>
-                    <Button className="card-button">
+                <Button
+                    className="card-button"
+                    variant="gradient"
+                    gradient={{ from: 'primary', to: 'secondary' }}
+                >
                         Get Started
                         <IconChevronRight />
                     </Button>

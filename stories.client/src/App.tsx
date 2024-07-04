@@ -8,7 +8,9 @@ import './App.css';
 
 import {
     AppShell,
-    MantineProvider
+    MantineColorsTuple,
+    MantineProvider,
+    createTheme
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { BrowserRouter } from 'react-router-dom';
@@ -28,9 +30,31 @@ function App() {
     })
     const [opened, { toggle }] = useDisclosure();
 
+    // Dark Blue
+    const primary: MantineColorsTuple = [
+        '#f3f3f7','#e3e3e7','#c5c5d0','#a4a4b9','#8888a5','#777699','#6d6d94','#5c5c82','#525174','#464668'
+    ];
+    // Light Purple
+    const secondary: MantineColorsTuple = [
+        '#f1eeff','#dedaf6','#bbb2e9','#9587db','#7563d0','#624cc9','#5740c7','#4733b0','#3e2c9e','#35258c'
+    ];
+    // Light Green
+    const tertiary: MantineColorsTuple = [
+        '#ebfffb','#d7fdf6','#a9fdec','#79fde2','#5bfdda','#4cfdd5','#44fdd2','#37e1b9','#28c8a5','#00ad8d'
+    ];
+
+    const theme = createTheme({
+        fontFamily: 'Greycliff CF, sans-serif',
+        colors: {
+            primary,
+            secondary,
+            tertiary
+        },
+    });
+
 
     return (
-        <MantineProvider>
+        <MantineProvider theme={theme }>
             <QueryClientProvider client={queryClient}>
                 <BrowserRouter>
                     <AppShell
