@@ -6,6 +6,13 @@ export interface FamilyMember {
 export interface Person {
     id: string;
     name: string;
-    email: string;
-    phone: string;
+    gender?: string;
+    birthday?: Date;
+    stories?: Story[];
+    relatives?: Person[];
+}
+export interface Story {
+    id: string;
+    title: string;
+    storyText?: string;
 }
