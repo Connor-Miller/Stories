@@ -16,7 +16,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './Router';
 import Header from './components/Header/Header';
-import { Navbar } from './components/Navbar/Navbar';
+import Navbar from './components/Navbar/Navbar';
 
 
 function App() {
@@ -59,14 +59,14 @@ function App() {
                 <BrowserRouter>
                     <AppShell
                         header={{ height: 60 }}
-                        navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+                        navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened, desktop: !opened } }}
                         padding={0}
                     >
                         <AppShell.Header>
                             <Header opened={opened} toggle={toggle} />
                         </AppShell.Header>
                         <AppShell.Navbar>
-                            <Navbar />
+                            <Navbar toggle={toggle} />
                         </AppShell.Navbar>
                         <AppShell.Main className="main-app">
                             <Router />

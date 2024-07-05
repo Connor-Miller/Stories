@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ opened, toggle }) => {
 
     return (
         <Group h="100%" px="md">
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+            <Burger opened={opened} onClick={toggle} /*hiddenFrom="sm"*/ size="sm" />
             <Image src="./treeIconGreen.png" radius="md" h={50 } />
             <Title order={1}>Our Legacy</Title>
             {!isMobile && (

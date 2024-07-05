@@ -3,3 +3,9 @@ export interface FamilyMember {
     mother?: FamilyMember;
     father?: FamilyMember;
 }
+export interface Person {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+}

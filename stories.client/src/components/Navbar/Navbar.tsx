@@ -20,7 +20,11 @@ const data = [
     { link: '/settings', label: 'Other Settings', icon: IconSettings },
 ];
 
-export function Navbar() {
+type NavbarProps = {
+    toggle: any;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ toggle }) => {
     const [active, setActive] = useState('Home');
 
     const links = data.map((item) => (
@@ -31,6 +35,7 @@ export function Navbar() {
                 key={item.label}
                 onClick={() => {
                     setActive(item.label);
+                    toggle();
                 }}
             >
                 <item.icon className={classes.linkIcon} stroke={1.5} />
@@ -63,3 +68,5 @@ export function Navbar() {
         </nav>
     );
 }
+
+export default Navbar;

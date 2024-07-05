@@ -1,8 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
-import FamilyTree from './pages/familyTree/FamilyTree';
 import { HomePage } from './pages/HomePage';
+import FamilyDirectory from './pages/familyDirectory/FamilyDirectory';
+import FamilyTree from './pages/familyTree/FamilyTree';
 
-import './Router.css'
+import './Router.css';
 
 const router = [
     {
@@ -12,6 +13,10 @@ const router = [
     {
         path: '/tree',
         element: <FamilyTree />,
+    },
+    {
+        path: '/directory',
+        element: <FamilyDirectory />,
     },
 ];
 
