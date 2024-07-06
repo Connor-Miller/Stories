@@ -1,4 +1,4 @@
-import { Person } from "./types";
+import { Person, Story } from "./types";
 
 export const samplePeople: Person[] = [
     {
@@ -98,4 +98,11 @@ export const samplePeople: Person[] = [
             }
         ]
     }
+];
+export const sampleStories: Story[] = [
+    { id: '101', title: 'The First Adventure', storyText: 'Once upon a time, John had his first adventure...' },
+    { id: '102', title: 'The Second Adventure', storyText: 'In his second adventure, John faced many challenges...' },
+    { id: '103', title: 'The Beginning', storyText: "Jane's story began in a small town..." },
+    { id: '104', title: 'The Journey', storyText: 'Michael embarked on a long journey across the country...' },
+    { id: '105', title: 'A New Beginning', storyText: 'Emily started a new chapter in her life...' }
 ];

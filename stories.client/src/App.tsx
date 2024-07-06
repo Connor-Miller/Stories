@@ -1,11 +1,5 @@
 ﻿import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-// Import styles of packages that you've installed.
-// All packages except `@mantine/hooks` require styles imports
-import '@mantine/core/styles.css';
-import './App.css';
-
-
 import {
     AppShell,
     MantineColorsTuple,
@@ -17,6 +11,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { Router } from './Router';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
+
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import './App.css';
+import '@mantine/core/styles.css';
 
 
 function App() {
