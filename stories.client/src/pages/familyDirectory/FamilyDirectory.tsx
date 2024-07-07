@@ -1,13 +1,14 @@
 // src/components/FamilyTree.tsx
 import { Button, Container } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
 import React, { useState } from 'react';
 import AddPersonModal from '../../components/familyDirectory/AddPersonModal';
 import PersonList from '../../components/familyDirectory/PersonList';
-import { samplePeople, sampleStories } from '../../data/sampleData';
+import { samplePeople } from '../../data/sampleData';
 import { Person } from '../../data/types';
 
 import '@mantine/core/styles.css'; // Import Mantine CSS
-import { useDisclosure } from '@mantine/hooks';
 
 
 interface FamilyDirectoryProps {
@@ -28,13 +29,14 @@ const FamilyDirectory: React.FC<FamilyDirectoryProps> = () => {
     return (
         <Container>
             <Button onClick={() => open()}>Add New Person</Button>
+            
+            <PersonList contacts={persons} />
             <AddPersonModal
                 opened={opened}
                 onClose={() => close()}
                 onAddPerson={handleAddPerson}
-                stories={sampleStories}
+                persons={samplePeople}
             />
-            <PersonList contacts={persons} />
         </Container>
     );
 };
