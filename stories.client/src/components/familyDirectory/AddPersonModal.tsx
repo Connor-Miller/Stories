@@ -51,8 +51,9 @@ const AddPersonModal: React.FC<AddPersonModalProps> = ({ opened, onClose, onAddP
                 opened={opened}
                 onClose={onClose}
                 title="Add New Person"
-                mih={100}
+                mih={100 }
                 miw={100}
+                className="modal-container"
             >
                 <form onSubmit={form.onSubmit(handleSubmit)}>
                     <TextInput
