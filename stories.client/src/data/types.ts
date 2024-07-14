@@ -1,3 +1,5 @@
+import { User } from "firebase/auth";
+
 export interface FamilyMember {
     name: string;
     mother?: FamilyMember;
@@ -20,4 +22,8 @@ export interface Relationship {
     fromId: string;
     toId: string;
     relationship: string;
+}
+export interface AuthContextProps {
+    currentUser: User | null;
+    signOut: () => void;
 }

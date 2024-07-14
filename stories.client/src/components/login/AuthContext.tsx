@@ -1,31 +1,43 @@
-// src/AuthContext.js
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+// src/AuthContext.tsx
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { getAuth, onAuthStateChanged, User, signOut as firebaseSignOut } from 'firebase/auth';
+import { AuthContextProps } from '../../data/types';
 
-const AuthContext = createContext();
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-interface AuthProviderProps {
-    children: any;
-}
-
-const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState(null);
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
 
     useEffect(() => {
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
+            console.log("Auth state change", user);
             setCurrentUser(user);
         });
         return unsubscribe;
     }, []);
 
+    const signOut = async () => {
+        const auth = getAuth();
+        try {
+            await firebaseSignOut(auth);
+            // The onAuthStateChanged listener will update the currentUser state
+        } catch (error) {
+            console.error("Error signing out:", error);
+        }
+    };
+
     return (
-        <AuthContext.Provider value= {{ currentUser }}>
-            { children }
+        <AuthContext.Provider value={{ currentUser, signOut }}>
+            {children}
         </AuthContext.Provider>
-  );
+    );
 };
 
-export default AuthProvider;
-
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error("useAuth must be used within an AuthProvider");
+    }
+    return context;
+};

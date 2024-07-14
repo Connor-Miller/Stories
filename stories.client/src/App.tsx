@@ -16,6 +16,7 @@ import Navbar from './components/Navbar/Navbar';
 // All packages except `@mantine/hooks` require styles imports
 import './App.css';
 import '@mantine/core/styles.css';
+import { AuthProvider } from './components/login/AuthContext';
 
 
 function App() {
@@ -53,28 +54,31 @@ function App() {
 
 
     return (
-        <MantineProvider theme={theme }>
-            <QueryClientProvider client={queryClient}>
-                <BrowserRouter>
-                    <AppShell
-                        header={{ height: 60 }}
-                        navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened, desktop: !opened } }}
-                        padding={0}
-                    >
-                        <AppShell.Header>
-                            <Header opened={opened} toggle={toggle} />
-                        </AppShell.Header>
-                        <AppShell.Navbar>
-                            <Navbar toggle={toggle} />
-                        </AppShell.Navbar>
-                        <AppShell.Main className="main-app">
-                            <Router />
-                        </AppShell.Main>
-                    </AppShell>
-                </BrowserRouter>               
-                <ReactQueryDevtools />
-            </QueryClientProvider>
-        </MantineProvider>
+        <AuthProvider>
+            <MantineProvider theme={theme}>
+                <QueryClientProvider client={queryClient}>
+                    <BrowserRouter>
+                        <AppShell
+                            header={{ height: 60 }}
+                            navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened, desktop: !opened } }}
+                            padding={0}
+                        >
+                            <AppShell.Header>
+                                <Header opened={opened} toggle={toggle} />
+                            </AppShell.Header>
+                            <AppShell.Navbar>
+                                <Navbar toggle={toggle} />
+                            </AppShell.Navbar>
+                            <AppShell.Main className="main-app">
+                                <Router />
+                            </AppShell.Main>
+                        </AppShell>
+                    </BrowserRouter>
+                    <ReactQueryDevtools />
+                </QueryClientProvider>
+            </MantineProvider>
+        </AuthProvider>
+        
         
     );
 

@@ -14,6 +14,7 @@ const DiscoverFamily: React.FC = () => {
                     className="card-button"
                     variant="gradient"
                     gradient={{ from: 'primary', to: 'secondary' }}
+                    onClick={() => window.location.href = '/signin' }
                 >
                         Get Started
                         <IconChevronRight />

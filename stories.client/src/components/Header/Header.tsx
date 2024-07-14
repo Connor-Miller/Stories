@@ -2,6 +2,7 @@ import { Burger, Group, Image, Input, Title, useMantineColorScheme } from '@mant
 import { useMediaQuery } from '@mantine/hooks';
 import { IconMoonStars, IconSearch } from '@tabler/icons-react';
 import { useState } from 'react';
+import UserPopover from './UserPopover';
 
 type HeaderProps = {
     opened: boolean;
@@ -35,6 +36,7 @@ const Header: React.FC<HeaderProps> = ({ opened, toggle }) => {
                     setColorScheme(colorScheme === 'light' ? 'dark' : 'light')
                 }}
             />
+            <UserPopover />
         </Group>
     );
 }

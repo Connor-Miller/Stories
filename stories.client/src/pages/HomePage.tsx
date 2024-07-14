@@ -1,10 +1,10 @@
 import DiscoverFamily from "../components/home/DiscoverFamily";
 import HiddenDetails from "../components/home/HiddenDetails";
-import SignIn from "../components/login/SignIn";
+import SignInWithGoogle from "../components/login/SignInWithGoogle";
 
 import './HomePage.css';
 
-export function HomePage() {
+const HomePage: React.FC = () => {
 
 
 
@@ -12,7 +12,12 @@ export function HomePage() {
         <div className="home">
             <DiscoverFamily />
             <HiddenDetails />
-            <SignIn />
+            <SignInWithGoogle
+                onSuccess={(user) => console.log(user)}
+                onError={(error) => console.log(error) }
+            />
         </div>            
     );
 }
+
+export default HomePage;

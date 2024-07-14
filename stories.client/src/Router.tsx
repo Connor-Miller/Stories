@@ -1,23 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
-import { HomePage } from './pages/HomePage';
 import FamilyDirectory from './pages/familyDirectory/FamilyDirectory';
 import FamilyTree from './pages/familyTree/FamilyTree';
 
 import './Router.css';
+import HomePage from './pages/HomePage';
+import SignInPage from './pages/SignInPage';
 
 const router = [
-    {
-        path: '/',
-        element: <HomePage />,
-    },
-    {
-        path: '/tree',
-        element: <FamilyTree />,
-    },
-    {
-        path: '/directory',
-        element: <FamilyDirectory />,
-    },
+    {path: '/', element: <HomePage />, },
+    { path: '/tree', element: <FamilyTree />, },
+    { path: '/directory', element: <FamilyDirectory />, },
+    { path: '/signin', element: <SignInPage /> },
 ];
 
 export function Router() {
