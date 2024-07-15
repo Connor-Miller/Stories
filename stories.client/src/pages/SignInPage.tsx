@@ -4,18 +4,24 @@ import SignInWithGoogle from '../components/login/SignInWithGoogle';
 
 const SignInPage: React.FC = () => {
 
+    function onSignInSuccess() {
+        window.location.href = '/directory'
+    }
+    function onSignInError(error: Error) {
+        console.log(error)
+    }
      
     return (
         <Container size="xs" mt="xl">
             <Paper radius="md" p="xl" withBorder>
-                <Stack align="center" spacing="lg">
+                <Stack align="center">
                     <Title order={2}>Welcome to Our Legacy</Title>
-                    <Text size="md" align="center">
+                    <Text size="md">
                         Sign in to access your account and preserve your legacy.
                     </Text>
                     <SignInWithGoogle
-                        onSuccess={() => window.location.href = '/directory'}
-                        onError={(error) => console.log(error)}
+                        onSuccess={() => onSignInSuccess()}
+                        onError={(error) => onSignInError(error)}
                     />
                 </Stack>
             </Paper>

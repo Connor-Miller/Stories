@@ -1,20 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Stories.Server.Models;
 using Stories.Server.Models.Requests;
 using Stories.Server.Repositories;
+using System.Security.Claims;
 
 
 namespace Stories.Server.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[Controller]")]
-public class FamilyController
+public class FamilyController : ControllerBase
 {
     private readonly IFamilyRepository _familyRepository;
 
     public FamilyController(IFamilyRepository familyRepository)
     {
         _familyRepository = familyRepository;
+    }
+
+    [HttpGet("test")]
+    public IActionResult FirebaseTest()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        return Ok($"Hello, authenticated user {userId}!");
     }
 
     [HttpGet("familytree")]
