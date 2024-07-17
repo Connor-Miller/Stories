@@ -27,3 +27,7 @@ export interface AuthContextProps {
     currentUser: User | null;
     signOut: () => void;
 }
+export interface RequestOptions {
+    headers?: Record<string, string>;
+    timeout?: number;
+}

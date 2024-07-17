@@ -11,7 +11,6 @@
   <ItemGroup>
     <Folder Include="src\components\familyTree\" />
     <Folder Include="src\components\Header\" />
-    <Folder Include="src\data\" />
     <Folder Include="src\pages\familyTree\" />
     <Folder Include="src\pages\familyDirectory\" />
     <Folder Include="src\theme\" />
