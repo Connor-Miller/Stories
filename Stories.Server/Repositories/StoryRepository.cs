@@ -12,10 +12,6 @@ namespace Stories.Server.Repositories;
 
 public interface IStoryRepository
 {
-    //Task<Movie> FindByTitle(string title);
-    //Task<int> VoteByTitle(string title);
-    //Task<List<Movie>> Search(string search);
-    //Task<D3Graph> FetchD3Graph(int limit);
     Task AddStoryWithRelationships(Story story, int personID, List<string> tagNames);
     Task<Story> GetStory(int storyID);
     Task<bool> DeleteStory(int storyID);
