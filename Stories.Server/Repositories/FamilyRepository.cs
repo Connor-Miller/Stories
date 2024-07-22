@@ -110,7 +110,7 @@ public class FamilyRepository : IFamilyRepository
             {
                 await session.RunAsync(
                     "CREATE (p:Person {PersonID: $PersonID, Name: $Name, Birthday: $Birthday})",
-                    new { person.PersonID, person.Name, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
+                    new { person.PersonID, person.DisplayName, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
                 );
             }
 
@@ -291,7 +291,7 @@ public class FamilyRepository : IFamilyRepository
             // Create the person node
             await session.RunAsync(
                 "CREATE (p:Person {PersonID: $PersonID, Name: $Name, Birthday: $Birthday})",
-                new { person.PersonID, person.Name, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
+                new { person.PersonID, person.DisplayName, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
             );
 
             // Create relationships
