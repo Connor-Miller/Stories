@@ -11,10 +11,6 @@ namespace Stories.Server.Repositories;
 
 public interface IFamilyRepository
 {
-    //Task<Movie> FindByTitle(string title);
-    //Task<int> VoteByTitle(string title);
-    //Task<List<Movie>> Search(string search);
-    //Task<D3Graph> FetchD3Graph(int limit);
     Task PopulateFamilyTreeData();
     Task<FamilyTree> GetFamilyTree();
     Task DeleteAllFamilyTreeData();
@@ -34,7 +30,6 @@ public class FamilyRepository : IFamilyRepository
         var versionStr = Environment.GetEnvironmentVariable("NEO4J_VERSION") ?? "";
         if( double.TryParse(versionStr, out var version) && version >= 4.0)
         {
-            //_queryConfig = new QueryConfig(database: Environment.GetEnvironmentVariable("NEO4J_DATABASE") ?? "movies");
             _queryConfig = new QueryConfig(database: "neo4j");
         }
         else

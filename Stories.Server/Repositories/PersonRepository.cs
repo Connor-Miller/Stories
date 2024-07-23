@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
-using Neo4j.Driver;
+﻿using Neo4j.Driver;
 using Stories.Server.Models;
-using Stories.Server.Models.Requests;
 
 namespace Stories.Server.Repositories;
 
@@ -50,7 +43,7 @@ public class PersonRepository : IPersonRepository
 
             var personNode = record["p"].As<INode>();
             var person = new Person(
-                personNode.Properties["PersonID"].As<int>(),
+                personNode.Properties["PersonID"].As<Guid>(),
                 personNode.Properties["Name"].As<string>(),
                 DateTime.Parse(personNode.Properties["Birthday"].As<string>()),
                 personNode.Properties["BirthLocation"].As<string>()
