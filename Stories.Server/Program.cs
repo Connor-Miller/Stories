@@ -36,6 +36,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IFamilyRepository, FamilyRepository>();
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 builder.Services.AddSingleton(GraphDatabase.Driver(
             mySettings.BaseURI,
