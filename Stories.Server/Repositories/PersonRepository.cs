@@ -29,21 +29,21 @@ public class PersonRepository : IPersonRepository
         _driver = driver;
     }
 
-    public async Task<Person> GetPersonById(int personID)
+    public async Task<Person> GetPersonById(int personId)
     {
         using var session = _driver.AsyncSession();
         try
         {
             var result = await session.RunAsync(
-                "MATCH (p:Person {PersonID: $PersonID}) RETURN p",
-                new { PersonID = personID }
+                "MATCH (p:Person {PersonId: $PersonId}) RETURN p",
+                new { PersonId = personId }
             );
 
             var record = await result.SingleAsync();
 
             var personNode = record["p"].As<INode>();
             var person = new Person(
-                personNode.Properties["PersonID"].As<Guid>(),
+                personNode.Properties["PersonId"].As<Guid>(),
                 personNode.Properties["Name"].As<string>(),
                 DateTime.Parse(personNode.Properties["Birthday"].As<string>()),
                 personNode.Properties["BirthLocation"].As<string>()

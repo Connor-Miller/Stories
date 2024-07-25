@@ -4,7 +4,8 @@ import SignInWithGoogle from '../components/login/SignInWithGoogle';
 
 const SignInPage: React.FC = () => {
 
-    function onSignInSuccess() {
+    function onSignInSuccess(data: any) {
+        console.log("DATA", data)
         window.location.href = '/directory'
     }
     function onSignInError(error: Error) {
@@ -20,7 +21,7 @@ const SignInPage: React.FC = () => {
                         Sign in to access your account and preserve your legacy.
                     </Text>
                     <SignInWithGoogle
-                        onSuccess={() => onSignInSuccess()}
+                        onSuccess={(data) => onSignInSuccess(data)}
                         onError={(error) => onSignInError(error)}
                     />
                 </Stack>

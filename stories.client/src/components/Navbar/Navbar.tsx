@@ -27,7 +27,6 @@ type NavbarProps = {
 
 const Navbar: React.FC<NavbarProps> = ({ toggle }) => {
     const auth = useAuth();
-    console.log(auth.currentUser)
 
     const [active, setActive] = useState('Home');
 

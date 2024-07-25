@@ -59,5 +59,10 @@ public class FamilyController : ControllerBase
     {
         return _familyRepository.AddPersonWithRelationships(personRequest.person, personRequest.relationships);
     }
+    [HttpGet("follows")]
+    public Task<List<Person>> GetFollows()
+    {
+        return null;
+    }
 
 }

@@ -33,10 +33,18 @@ public class UserController : ControllerBase
         return _userRepository.GetUserByEmail(email);
     }
 
-    [HttpPost("signup")]
-    public Task CreateUser(CreateUserRequest request)
+    [HttpPost("login")]
+    public IActionResult Login(CreateUserRequest request)
     {
-        return _userRepository.CreateUser(request);
+        // Return Logged in user if already created
+        var user = _userRepository.GetUserByEmail(request.Email);
+        if (user != null) return Ok(user);
+
+        // Create User if first time login
+        var newUser = _userRepository.CreateUser(request);
+        if (newUser != null) return Ok(newUser);
+
+        return BadRequest("User could not be found or created");
     }
  
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
-using Neo4j.Driver;
+﻿using Neo4j.Driver;
 using Stories.Server.Models;
 
 namespace Stories.Server.Repositories;
@@ -14,8 +8,8 @@ public interface IFamilyRepository
     Task PopulateFamilyTreeData();
     Task<FamilyTree> GetFamilyTree();
     Task DeleteAllFamilyTreeData();
-    Task<List<Person>> GetAncestors(int personID);
-    Task<List<Person>> GetDescendants(int personID);
+    Task<List<Person>> GetAncestors(int personId);
+    Task<List<Person>> GetDescendants(int personId);
     Task AddPersonWithRelationships(Person person, List<Relationship> relationships);
 
 }
@@ -42,58 +36,76 @@ public class FamilyRepository : IFamilyRepository
 
     public async Task PopulateFamilyTreeData()
     {
+        
+        Guid guid1 = Guid.NewGuid();
+        Guid guid2 = Guid.NewGuid();
+        Guid guid3 = Guid.NewGuid();
+        Guid guid4 = Guid.NewGuid();
+        Guid guid5 = Guid.NewGuid();
+        Guid guid6 = Guid.NewGuid();
+        Guid guid7 = Guid.NewGuid();
+        Guid guid8 = Guid.NewGuid();
+        Guid guid9 = Guid.NewGuid();
+        Guid guid10 = Guid.NewGuid();
+        Guid guid11 = Guid.NewGuid();
+        Guid guid12 = Guid.NewGuid();
+        Guid guid13 = Guid.NewGuid();
+        Guid guid14 = Guid.NewGuid();
+        Guid guid15 = Guid.NewGuid();
+
+
         var persons = new List<Person>
     {
         // Generation 1
-        new Person(1, "Great Grandpa", new DateTime(1930, 1, 1)),
-        new Person(2, "Great Grandma", new DateTime(1932, 2, 2)),
+        new Person(guid1, "Great Grandpa", new DateTime(1930, 1, 1)),
+        new Person(guid2, "Great Grandma", new DateTime(1932, 2, 2)),
 
         // Generation 2
-        new Person(3, "Grandpa", new DateTime(1955, 3, 3)),
-        new Person(4, "Grandma", new DateTime(1957, 4, 4)),
-        new Person(5, "Great Uncle", new DateTime(1958, 5, 5)),
-        new Person(6, "Great Aunt", new DateTime(1960, 6, 6)),
+        new Person(guid3, "Grandpa", new DateTime(1955, 3, 3)),
+        new Person(guid4, "Grandma", new DateTime(1957, 4, 4)),
+        new Person(guid5, "Great Uncle", new DateTime(1958, 5, 5)),
+        new Person(guid6, "Great Aunt", new DateTime(1960, 6, 6)),
 
         // Generation 3
-        new Person(7, "Father", new DateTime(1980, 7, 7)),
-        new Person(8, "Mother", new DateTime(1982, 8, 8)),
-        new Person(9, "Uncle", new DateTime(1983, 9, 9)),
-        new Person(10, "Aunt", new DateTime(1985, 10, 10)),
+        new Person(guid7, "Father", new DateTime(1980, 7, 7)),
+        new Person(guid8, "Mother", new DateTime(1982, 8, 8)),
+        new Person(guid9, "Uncle", new DateTime(1983, 9, 9)),
+        new Person(guid10, "Aunt", new DateTime(1985, 10, 10)),
 
         // Generation 4
-        new Person(11, "Child1", new DateTime(2005, 11, 11)),
-        new Person(12, "Child2", new DateTime(2007, 12, 12)),
-        new Person(13, "Cousin1", new DateTime(2008, 1, 13)),
-        new Person(14, "Cousin2", new DateTime(2010, 2, 14))
+        new Person(guid11, "Child1", new DateTime(2005, 11, 11)),
+        new Person(guid12, "Child2", new DateTime(2007, 12, 12)),
+        new Person(guid13, "Cousin1", new DateTime(2008, 1, 13)),
+        new Person(guid14, "Cousin2", new DateTime(2010, 2, 14))
     };
 
         // Relationships: mother, father, and spouse
-        var relationships = new List<(int From, int To, string Type)>
+        var relationships = new List<(Guid From, Guid To, string Type)>
     {
         // Spouse relationships
-        (1, 2, "SPOUSE"),
-        (3, 4, "SPOUSE"),
-        (5, 6, "SPOUSE"),
-        (7, 8, "SPOUSE"),
-        (9, 10, "SPOUSE"),
+        (guid1, guid2, "SPOUSE"),
+        (guid3, guid4, "SPOUSE"),
+        (guid5, guid6, "SPOUSE"),
+        (guid7, guid8, "SPOUSE"),
+        (guid9, guid10, "SPOUSE"),
 
         // Parent-child relationships
-        (3, 1, "FATHER"),
-        (3, 2, "MOTHER"),
-        (5, 1, "FATHER"),
-        (5, 2, "MOTHER"),
-        (7, 3, "FATHER"),
-        (7, 4, "MOTHER"),
-        (9, 3, "FATHER"),
-        (9, 4, "MOTHER"),
-        (11, 7, "FATHER"),
-        (11, 8, "MOTHER"),
-        (12, 7, "FATHER"),
-        (12, 8, "MOTHER"),
-        (13, 9, "FATHER"),
-        (13, 10, "MOTHER"),
-        (14, 9, "FATHER"),
-        (14, 10, "MOTHER")
+        (guid3, guid1, "FATHER"),
+        (guid3, guid2, "MOTHER"),
+        (guid5, guid1, "FATHER"),
+        (guid5, guid2, "MOTHER"),
+        (guid7, guid3, "FATHER"),
+        (guid7, guid4, "MOTHER"),
+        (guid9, guid3, "FATHER"),
+        (guid9, guid4, "MOTHER"),
+        (guid11, guid7, "FATHER"),
+        (guid11, guid8, "MOTHER"),
+        (guid12, guid7, "FATHER"),
+        (guid12, guid8, "MOTHER"),
+        (guid13, guid9, "FATHER"),
+        (guid13, guid10, "MOTHER"),
+        (guid14, guid9, "FATHER"),
+        (guid14, guid10, "MOTHER")
     };
 
         using var session = _driver.AsyncSession();
@@ -104,8 +116,8 @@ public class FamilyRepository : IFamilyRepository
             foreach (var person in persons)
             {
                 await session.RunAsync(
-                    "CREATE (p:Person {PersonID: $PersonID, Name: $Name, Birthday: $Birthday})",
-                    new { person.PersonID, person.DisplayName, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
+                    "CREATE (p:Person {PersonId: $PersonId, Name: $Name, Birthday: $Birthday})",
+                    new { person.PersonId, person.DisplayName, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
                 );
             }
 
@@ -114,8 +126,8 @@ public class FamilyRepository : IFamilyRepository
             {
                 await session.RunAsync(
                     $@"
-                MATCH (a:Person {{PersonID: $From}})
-                MATCH (b:Person {{PersonID: $To}})
+                MATCH (a:Person {{PersonId: $From}})
+                MATCH (b:Person {{PersonId: $To}})
                 CREATE (a)-[:{relationship.Type}]->(b)",
                     new { From = relationship.From, To = relationship.To }
                 );
@@ -154,20 +166,20 @@ public class FamilyRepository : IFamilyRepository
 
             var records = await result.ToListAsync();
 
-            var personsDict = new Dictionary<int, Person>();
+            var personsDict = new Dictionary<Guid, Person>();
 
             foreach (var record in records)
             {
                 var personNode = record["p"].As<INode>();
                 var person = new Person(
-                    personNode.Properties["PersonID"].As<int>(),
+                    personNode.Properties["PersonId"].As<Guid>(),
                     personNode.Properties["Name"].As<string>(),
                     DateTime.Parse(personNode.Properties["Birthday"].As<string>())
                 );
 
-                if (!personsDict.ContainsKey(person.PersonID))
+                if (!personsDict.ContainsKey(person.PersonId))
                 {
-                    personsDict.Add(person.PersonID, person);
+                    personsDict.Add(person.PersonId, person);
                     familyTree.Persons.Add(person);
                 }
 
@@ -175,21 +187,21 @@ public class FamilyRepository : IFamilyRepository
                 {
                     var relatedPersonNode = record["relatedPerson"].As<INode>();
                     var relatedPerson = new Person(
-                        relatedPersonNode.Properties["PersonID"].As<int>(),
+                        relatedPersonNode.Properties["PersonId"].As<Guid>(),
                         relatedPersonNode.Properties["Name"].As<string>(),
                         DateTime.Parse(relatedPersonNode.Properties["Birthday"].As<string>())
                     );
 
-                    if (!personsDict.ContainsKey(relatedPerson.PersonID))
+                    if (!personsDict.ContainsKey(relatedPerson.PersonId))
                     {
-                        personsDict.Add(relatedPerson.PersonID, relatedPerson);
+                        personsDict.Add(relatedPerson.PersonId, relatedPerson);
                         familyTree.Persons.Add(relatedPerson);
                     }
 
                     var relationship = new Relationship
                     {
-                        From = person.PersonID,
-                        To = relatedPerson.PersonID,
+                        From = person.PersonId,
+                        To = relatedPerson.PersonId,
                         Type = record["relationshipType"].As<string>()
                     };
 
@@ -204,7 +216,7 @@ public class FamilyRepository : IFamilyRepository
 
         return familyTree;
     }
-    public async Task<List<Person>> GetAncestors(int personID)
+    public async Task<List<Person>> GetAncestors(int personId)
     {
         var ancestors = new List<Person>();
 
@@ -212,11 +224,11 @@ public class FamilyRepository : IFamilyRepository
         try
         {
             var query = @"
-            MATCH (person:Person {PersonID: $personID})
+            MATCH (person:Person {PersonId: $personId})
             OPTIONAL MATCH (person)-[:FATHER|MOTHER*]->(ancestor:Person)
             RETURN DISTINCT ancestor";
 
-            var result = await session.RunAsync(query, new { personID });
+            var result = await session.RunAsync(query, new { personId });
 
             var records = await result.ToListAsync();
 
@@ -226,7 +238,7 @@ public class FamilyRepository : IFamilyRepository
 
                 var ancestorNode = record["ancestor"].As<INode>();
                 var ancestor = new Person(
-                    ancestorNode.Properties["PersonID"].As<int>(),
+                    ancestorNode.Properties["PersonId"].As<Guid>(),
                     ancestorNode.Properties["Name"].As<string>(),
                     DateTime.Parse(ancestorNode.Properties["Birthday"].As<string>())
                 );
@@ -241,7 +253,7 @@ public class FamilyRepository : IFamilyRepository
 
         return ancestors;
     }
-    public async Task<List<Person>> GetDescendants(int personID)
+    public async Task<List<Person>> GetDescendants(int personId)
     {
         var descendants = new List<Person>();
 
@@ -249,11 +261,11 @@ public class FamilyRepository : IFamilyRepository
         try
         {
             var query = @"
-            MATCH (person:Person {PersonID: $personID})
+            MATCH (person:Person {PersonId: $personId})
             OPTIONAL MATCH (person)<-[:FATHER|MOTHER*]-(descendant:Person)
             RETURN DISTINCT descendant";
 
-            var result = await session.RunAsync(query, new { personID });
+            var result = await session.RunAsync(query, new { personId });
 
             var records = await result.ToListAsync();
 
@@ -263,7 +275,7 @@ public class FamilyRepository : IFamilyRepository
 
                 var descendantNode = record["descendant"].As<INode>();
                 var descendant = new Person(
-                    descendantNode.Properties["PersonID"].As<int>(),
+                    descendantNode.Properties["PersonId"].As<Guid>(),
                     descendantNode.Properties["Name"].As<string>(),
                     DateTime.Parse(descendantNode.Properties["Birthday"].As<string>())
                 );
@@ -285,8 +297,8 @@ public class FamilyRepository : IFamilyRepository
         {
             // Create the person node
             await session.RunAsync(
-                "CREATE (p:Person {PersonID: $PersonID, Name: $Name, Birthday: $Birthday})",
-                new { person.PersonID, person.DisplayName, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
+                "CREATE (p:Person {PersonId: $PersonId, Name: $Name, Birthday: $Birthday})",
+                new { person.PersonId, person.DisplayName, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
             );
 
             // Create relationships
@@ -294,10 +306,10 @@ public class FamilyRepository : IFamilyRepository
             {
                 await session.RunAsync(
                     $@"
-                MATCH (a:Person {{PersonID: $PersonID}})
-                MATCH (b:Person {{PersonID: $RelatedPersonID}})
+                MATCH (a:Person {{PersonId: $PersonId}})
+                MATCH (b:Person {{PersonId: $RelatedPersonId}})
                 CREATE (a)-[:{relationship.Type}]->(b)",
-                    new { PersonID = person.PersonID, RelatedPersonID = relationship.To }
+                    new { PersonId = person.PersonId, RelatedPersonId = relationship.To }
                 );
             }
         }

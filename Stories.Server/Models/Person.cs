@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 public class Person
 {
 
-    [Key] // This attribute marks PersonID as the primary key
+    [Key] // This attribute marks PersonId as the primary key
     public Guid PersonId { get; set; }
 
     [Required]

@@ -2,12 +2,12 @@
 {
     public class Tag
     {
-        public int TagID { get; set; }
+        public int TagId { get; set; }
         public string TagName { get; set; }
 
         public Tag(int tagID, string tagName)
         {
-            TagID = tagID;
+            TagId = tagID;
             TagName = tagName;
         }
         public Tag() { }
@@ -15,7 +15,7 @@
         // Optional: Override ToString() method for easier debugging and logging
         public override string ToString()
         {
-            return $"TagID: {TagID}, TagName: {TagName}";
+            return $"TagId: {TagId}, TagName: {TagName}";
         }
     }
 

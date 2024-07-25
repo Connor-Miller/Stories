@@ -35,6 +35,8 @@ public class UserRepository : IUserRepository
 
     public async Task<User> GetUserByEmail(string email)
     {
+        var userNodeService = new NodeService<User>();
+
         using var session = _driver.AsyncSession();
         try 
         {
@@ -46,17 +48,13 @@ public class UserRepository : IUserRepository
             var record = await result.SingleAsync();
 
             var userNode = record["u"].As<INode>();
-            var user = new User(
-                userNode.Properties["Email"].As<string>(),
-                userNode.Properties["DisplayName"].As<string>(),
-                userNode.Properties["UserId"].As<Guid>()
-            );
+            User user = userNodeService.FromNode(userNode);
 
             return user;
         }
         catch (Exception ex)
         {
-            // Handle the case when the story is not found or any other error occurs
+            // Handle the case when the user is not found or any other error occurs
             Console.WriteLine($"An error occurred: {ex.Message}");
             return null;
         }
@@ -68,46 +66,47 @@ public class UserRepository : IUserRepository
 
     public async Task<User> CreateUser(CreateUserRequest request)
     {
+        var userNodeService = new NodeService<User>();
+        var newUser = new User(request);
+
         using var session = _driver.AsyncSession();
         try
         {
             var result = await session.ExecuteWriteAsync(async tx =>
             {
-                var query = @"
-                CREATE (u:User {
-                    UserId: $UserId,
-                    DisplayName: $DisplayName,
-                    Email: $Email,
-                    IPAddress: $IPAddress,
-                    UserAgent: $UserAgent,
-                    SignUpTimestamp: $SignUpTimestamp,
-                })
-                RETURN u";
+                //var query = @"
+                //CREATE (u:User {
+                //    UserId: $UserId,
+                //    DisplayName: $DisplayName,
+                //    Email: $Email,
+                //    IPAddress: $IPAddress,
+                //    UserAgent: $UserAgent,
+                //    SignUpTimestamp: $SignUpTimestamp,
+                //})
+                //RETURN u";
 
-                var parameters = new
-                {
-                    UserId = Guid.NewGuid(),
-                    DisplayName = request.DisplayName,
-                    Email = request.Email,
-                    IPAddress = request.IPAddress,
-                    UserAgent = request.UserAgent,
-                    SignUpTimestamp = DateTime.UtcNow,
-                };
+                //var parameters = new
+                //{
+                //    UserId = Guid.NewGuid(),
+                //    DisplayName = request.DisplayName,
+                //    Email = request.Email,
+                //    IPAddress = request.IPAddress,
+                //    UserAgent = request.UserAgent,
+                //    SignUpTimestamp = DateTime.UtcNow,
+                //};
 
-                var result = await tx.RunAsync(query, parameters);
+                //var result = await tx.RunAsync(query, parameters);
+
+                var userProperties = userNodeService.ToProperties(newUser);
+                var result = await tx.RunAsync("CREATE (u:User $props)", new { props = userProperties });
+
                 var record = await result.SingleAsync();
                 var userNode = record["u"].As<INode>();
 
-                return new User(
-                    userNode.Properties["DisplayName"].As<string>(),
-                    userNode.Properties["Email"].As<string>(),
-                    userNode.Properties["IPAddress"].As<string>(),
-                    userNode.Properties["UserAgent"].As<string>()
-                )
-                {
-                    UserId = userNode.Properties["UserId"].As<Guid>(),
-                    SignUpTimestamp = userNode.Properties["SignUpTimestamp"].As<DateTime>()
-                };
+                User user = userNodeService.FromNode(userNode);
+
+                return user;
+
             });
 
             return result;

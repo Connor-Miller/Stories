@@ -41,24 +41,24 @@ public class StoryRepository : IStoryRepository
         _driver = driver;
     }
 
-    public async Task AddStoryWithRelationships(Story story, int personID, List<string> tagNames)
+    public async Task AddStoryWithRelationships(Story story, int personId, List<string> tagNames)
     {
         using var session = _driver.AsyncSession();
         try
         {
             // Create the story node
             await session.RunAsync(
-                "CREATE (s:Story {StoryID: $StoryID, Date: $Date, Location: $Location, StoryText: $StoryText})",
-                new { story.StoryID, story.Date, story.Location, story.StoryText }
+                "CREATE (s:Story {StoryId: $StoryId, Date: $Date, Location: $Location, StoryText: $StoryText})",
+                new { story.StoryId, story.Date, story.Location, story.StoryText }
             );
 
             // Create a relationship between the story and the person
             await session.RunAsync(
                 @"
-            MATCH (p:Person {PersonID: $PersonID})
-            MATCH (s:Story {StoryID: $StoryID})
+            MATCH (p:Person {PersonId: $PersonId})
+            MATCH (s:Story {StoryId: $StoryId})
             CREATE (p)-[:TELLS_STORY]->(s)",
-                new { PersonID = personID, StoryID = story.StoryID }
+                new { PersonId = personId, StoryId = story.StoryId }
             );
 
             // Handle tag relationships
@@ -80,18 +80,18 @@ public class StoryRepository : IStoryRepository
                 if (tagNode == null)
                 {
                     await session.RunAsync(
-                        "CREATE (t:Tag {TagID: $TagID, TagName: $TagName})",
-                        new { TagID = Guid.NewGuid().GetHashCode(), TagName = tagName }
+                        "CREATE (t:Tag {TagId: $TagId, TagName: $TagName})",
+                        new { TagId = Guid.NewGuid().GetHashCode(), TagName = tagName }
                     );
                 }
 
                 // Create a relationship between the story and the tag
                 await session.RunAsync(
                     @"
-                MATCH (s:Story {StoryID: $StoryID})
+                MATCH (s:Story {StoryId: $StoryId})
                 MATCH (t:Tag {TagName: $TagName})
                 CREATE (s)-[:TAGGED_WITH]->(t)",
-                    new { StoryID = story.StoryID, TagName = tagName }
+                    new { StoryId = story.StoryId, TagName = tagName }
                 );
             }
         }
@@ -106,15 +106,15 @@ public class StoryRepository : IStoryRepository
         try
         {
             var result = await session.RunAsync(
-                "MATCH (s:Story {StoryID: $StoryID}) RETURN s",
-                new { StoryID = storyId }
+                "MATCH (s:Story {StoryId: $StoryId}) RETURN s",
+                new { StoryId = storyId }
             );
 
             var record = await result.SingleAsync();
 
             var storyNode = record["s"].As<INode>();
             var story = new Story(
-                storyNode.Properties["StoryID"].As<int>(),
+                storyNode.Properties["StoryId"].As<int>(),
                 DateTime.Parse(storyNode.Properties["Date"].As<string>()),
                 storyNode.Properties["Location"].As<string>(),
                 storyNode.Properties["StoryText"].As<string>()
@@ -139,8 +139,8 @@ public class StoryRepository : IStoryRepository
         try
         {
             var result = await session.RunAsync(
-                "MATCH (s:Story {StoryID: $StoryID}) DETACH DELETE s",
-                new { StoryID = storyId }
+                "MATCH (s:Story {StoryId: $StoryId}) DETACH DELETE s",
+                new { StoryId = storyId }
             );
 
             var summary = await result.ConsumeAsync();
@@ -165,7 +165,7 @@ public class StoryRepository : IStoryRepository
         {
             var result = await session.RunAsync(
                 @"
-            MATCH (s:Story {StoryID: $StoryID})
+            MATCH (s:Story {StoryId: $StoryId})
             SET s.Location = $Location, s.Date = $Date, s.StoryText = $StoryText
             RETURN s",
                 new
@@ -204,10 +204,10 @@ public class StoryRepository : IStoryRepository
             parameters.Add("Name", request.Name);
         }
 
-        if (request.PersonID.HasValue)
+        if (request.PersonId.HasValue)
         {
-            query.Add("p.PersonID = $PersonID");
-            parameters.Add("PersonID", request.PersonID);
+            query.Add("p.PersonId = $PersonId");
+            parameters.Add("PersonId", request.PersonId);
         }
 
         if (request.Tag != null)
@@ -248,7 +248,7 @@ public class StoryRepository : IStoryRepository
         {
             var storyNode = record["s"].As<INode>();
             var story = new Story(
-                storyNode.Properties["StoryID"].As<int>(),
+                storyNode.Properties["StoryId"].As<int>(),
                 DateTime.Parse(storyNode.Properties["Date"].As<string>()),
                 storyNode.Properties["Location"].As<string>(),
                 storyNode.Properties["StoryText"].As<string>()

@@ -33,5 +33,5 @@ export interface RequestOptions {
 }
 export interface AppUser {
     email: string;
-    //FIXME
+    displayName: string;
 }
