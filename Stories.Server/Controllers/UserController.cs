@@ -14,10 +14,12 @@ namespace Stories.Server.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
+    private readonly IPersonRepository _personRepository;
 
-    public UserController(IUserRepository userRepository)
+    public UserController(IUserRepository userRepository, IPersonRepository personRepository)
     {
         _userRepository = userRepository;
+        _personRepository = personRepository;
     }
 
     [HttpGet("test")]
@@ -41,8 +43,13 @@ public class UserController : ControllerBase
         if (user != null) return Ok(user);
 
         // Create User if first time login
-        var newUser = _userRepository.CreateUser(request);
-        if (newUser != null) return Ok(newUser);
+        User newUser = _userRepository.CreateUser(request);
+
+        if (newUser == null) return BadRequest("User could not be found or created");
+
+        // Create the corresponding Person
+        var person = new Person(newUser.UserId, newUser.DisplayName, null);
+        var newPerson = _personRepository.CreatePerson(person);
 
         return BadRequest("User could not be found or created");
     }

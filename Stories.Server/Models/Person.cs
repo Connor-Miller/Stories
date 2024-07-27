@@ -13,7 +13,7 @@ public class Person
     [StringLength(100)] // This sets a maximum length for the Name property
     public string DisplayName { get; set; }
     public string BirthLocation { get; set; }
-    public DateTime Birthday { get; set; }
+    public DateTime? Birthday { get; set; }
     public DateTime PersonCreatedTimeStamp { get; set; }
     public Guid? UserId { get; set; }
     public Guid CreatedById { get; set; }
@@ -22,7 +22,7 @@ public class Person
     public Person(
         Guid createdById, 
         string name, 
-        DateTime birthday,
+        DateTime? birthday,
         string birthLocation = ""
         )
     {

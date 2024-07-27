@@ -1,18 +1,20 @@
 ﻿using Neo4j.Driver;
 using Stories.Server.Models;
+using Stories.Server.Models.Requests;
 
 namespace Stories.Server.Repositories;
 
 public interface IPersonRepository
 {
-
-    Task<Person> GetPersonById(int personID);
+    Task<Person> GetPersonById(Guid personId);
+    Task<Person> CreatePerson(Person person);
 }
 
 public class PersonRepository : IPersonRepository
 {
     private readonly IDriver _driver;
     private readonly QueryConfig _queryConfig;
+    private readonly NodeService<Person> personNodeService;
 
     public PersonRepository(IDriver driver)
     {
@@ -27,9 +29,10 @@ public class PersonRepository : IPersonRepository
         }
 
         _driver = driver;
+        personNodeService = new NodeService<Person>();
     }
 
-    public async Task<Person> GetPersonById(int personId)
+    public async Task<Person> GetPersonById(Guid personId)
     {
         using var session = _driver.AsyncSession();
         try
@@ -63,6 +66,38 @@ public class PersonRepository : IPersonRepository
         }
     }
 
+    public async Task<Person> CreatePerson(Person person)
+    {
+        using var session = _driver.AsyncSession();
+        try
+        {
+            var result = await session.ExecuteWriteAsync(async tx =>
+            {
 
+                var personProperties = personNodeService.ToProperties(person);
+                var result = await tx.RunAsync("CREATE (p:Person $props)", new { props = personProperties });
+
+                var record = await result.SingleAsync();
+                var personNode = record["p"].As<INode>();
+
+                Person newPerson = personNodeService.FromNode(personNode);
+
+                return newPerson;
+
+            });
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            // Handle the case when person creation fails or any other error occurs
+            Console.WriteLine($"An error occurred while creating person: {ex.Message}");
+            return null;
+        }
+        finally
+        {
+            await session.CloseAsync();
+        }
+    }
 
 }
