@@ -26,7 +26,7 @@
             )
         {
             DisplayName = displayName;
-            UserId = new Guid();
+            UserId = Guid.NewGuid();
             Email = email;
             IPAddress = iPAddress;
             UserAgent = userAgent;
@@ -38,7 +38,7 @@
             )
         {
             DisplayName = request.DisplayName;
-            UserId = new Guid();
+            UserId = Guid.NewGuid();
             Email = request.Email;
             IPAddress = request.IPAddress;
             UserAgent = request.UserAgent;

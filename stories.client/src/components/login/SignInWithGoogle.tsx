@@ -25,15 +25,16 @@ const SignInWithGoogle: React.FC<SignInWithGoogleProps> = ({ onSuccess, onError 
     })
 
     useEffect(() => {
-        setToken(fetchToken(currentUser!));
-
+        fetchToken(currentUser!)
+            .then((data) => {
+                setToken(data);
+                return data;
+            })
     }, [currentUser])
 
     const handleSignIn = async () => {
-        console.log("Handle Sign in")
 
         try {
-            console.log("Handle Sign in")
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
             if (onSuccess) {
@@ -41,7 +42,7 @@ const SignInWithGoogle: React.FC<SignInWithGoogleProps> = ({ onSuccess, onError 
                  
                 const appUser: AppUser = {
                     email: user.email ?? "",
-                    dispayName: user.displayName,
+                    displayName: user.displayName ?? "",
 
                 }
                 createUserMutation.mutate(appUser);

@@ -15,7 +15,22 @@ public class NodeService<T> where T : class, new()
             var value = prop.GetValue(entity);
             if (value != null)
             {
-                properties[prop.Name] = value;
+                if (prop.PropertyType == typeof(Guid))
+                {
+                    properties[prop.Name] = value.ToString();
+                }
+                else if (prop.PropertyType == typeof(DateTime))
+                {
+                    properties[prop.Name] = ((DateTime)value).ToString("o"); // ISO 8601 format
+                }
+                else if (prop.PropertyType.IsEnum)
+                {
+                    properties[prop.Name] = value.ToString();
+                }
+                else
+                {
+                    properties[prop.Name] = value;
+                }
             }
         }
 

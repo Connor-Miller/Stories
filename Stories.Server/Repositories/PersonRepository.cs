@@ -75,14 +75,19 @@ public class PersonRepository : IPersonRepository
             {
 
                 var personProperties = personNodeService.ToProperties(person);
-                var result = await tx.RunAsync("CREATE (p:Person $props)", new { props = personProperties });
+                var result = await tx.RunAsync(
+                    "CREATE (p:Person) SET p = $props RETURN p",
+                    new { props = personProperties }
+                );
 
-                var record = await result.SingleAsync();
-                var personNode = record["p"].As<INode>();
+                var record = await result.SingleAsync(record => record["p"].As<INode>());
+                if (record == null)
+                {
+                    throw new Exception("No person node was created");
+                }
 
-                Person newPerson = personNodeService.FromNode(personNode);
-
-                return newPerson;
+                Person newPerson = personNodeService.FromNode(record);
+                return person;
 
             });
 

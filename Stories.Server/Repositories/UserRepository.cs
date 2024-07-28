@@ -10,7 +10,7 @@ public interface IUserRepository
     Task<User> GetUserByEmail(string email);
     Task<User> CreateUser(CreateUserRequest request);
     Task<bool> CheckUserAccess(Guid userId, Guid recordId);
-    Task AddUserFollowRelationship(Guid userId, Guid personId);
+    Task AddUserFollowRelationship(Guid userId, Guid personId, string relationshipType);
 }
 
 public class UserRepository : IUserRepository
@@ -74,37 +74,20 @@ public class UserRepository : IUserRepository
         {
             var result = await session.ExecuteWriteAsync(async tx =>
             {
-                //var query = @"
-                //CREATE (u:User {
-                //    UserId: $UserId,
-                //    DisplayName: $DisplayName,
-                //    Email: $Email,
-                //    IPAddress: $IPAddress,
-                //    UserAgent: $UserAgent,
-                //    SignUpTimestamp: $SignUpTimestamp,
-                //})
-                //RETURN u";
-
-                //var parameters = new
-                //{
-                //    UserId = Guid.NewGuid(),
-                //    DisplayName = request.DisplayName,
-                //    Email = request.Email,
-                //    IPAddress = request.IPAddress,
-                //    UserAgent = request.UserAgent,
-                //    SignUpTimestamp = DateTime.UtcNow,
-                //};
-
-                //var result = await tx.RunAsync(query, parameters);
-
                 var userProperties = userNodeService.ToProperties(newUser);
-                var result = await tx.RunAsync("CREATE (u:User $props)", new { props = userProperties });
 
-                var record = await result.SingleAsync();
-                var userNode = record["u"].As<INode>();
+                var result = await tx.RunAsync(
+                    "CREATE (u:User) SET u = $props RETURN u",
+                    new { props = userProperties }
+                );
 
-                User user = userNodeService.FromNode(userNode);
+                var record = await result.SingleAsync(record => record["u"].As<INode>());
+                if (record == null)
+                {
+                    throw new Exception("No user node was created");
+                }
 
+                User user = userNodeService.FromNode(record);
                 return user;
 
             });
@@ -128,9 +111,29 @@ public class UserRepository : IUserRepository
 
         return false;
     }
-    public async Task AddUserFollowRelationship(Guid userId, Guid personId)
+    public async Task AddUserFollowRelationship(Guid userId, Guid personId, string relationshipType)
     {
+        using var session = _driver.AsyncSession();
 
+        try
+        {
+            // Create relationship
+            var result = await session.RunAsync(
+                $@"
+            MATCH (a:User {{UserId: $From}})
+            MATCH (b:Person {{PersonId: $To}})
+            CREATE (a)-[:{relationshipType}]->(b)",
+                new { From = userId.ToString(), To = personId.ToString() }
+            );
+        }
+        catch(Exception ex) 
+        {
+            Console.WriteLine($"An error occured writing User to Person relationship: {ex.Message}");
+        }
+        finally
+        {
+            await session.CloseAsync();
+        }
     }
 
 }

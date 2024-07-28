@@ -6,7 +6,7 @@ const SignInPage: React.FC = () => {
 
     function onSignInSuccess(data: any) {
         console.log("DATA", data)
-        window.location.href = '/directory'
+        //window.location.href = '/directory'
     }
     function onSignInError(error: Error) {
         console.log(error)

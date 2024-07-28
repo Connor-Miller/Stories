@@ -1,5 +1,6 @@
 ﻿using Neo4j.Driver;
 using Stories.Server.Models;
+using System;
 
 namespace Stories.Server.Repositories;
 
@@ -18,6 +19,7 @@ public class FamilyRepository : IFamilyRepository
 {
     private readonly IDriver _driver;
     private readonly QueryConfig _queryConfig;
+    private readonly NodeService<Person> personNodeService;
 
     public FamilyRepository(IDriver driver)
     {
@@ -32,6 +34,7 @@ public class FamilyRepository : IFamilyRepository
         }
 
         _driver = driver;
+        personNodeService = new NodeService<Person>();
     }
 
     public async Task PopulateFamilyTreeData()
@@ -113,13 +116,18 @@ public class FamilyRepository : IFamilyRepository
         try
         {
             // Create person nodes
-            foreach (var person in persons)
+            await session.ExecuteWriteAsync(async tx =>
             {
-                await session.RunAsync(
-                    "CREATE (p:Person {PersonId: $PersonId, Name: $Name, Birthday: $Birthday})",
-                    new { person.PersonId, person.DisplayName, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
-                );
-            }
+                foreach (var person in persons)
+                {
+                    var personProperties = personNodeService.ToProperties(person);
+                    var result = await tx.RunAsync("CREATE (p:Person $props)", new { props = personProperties });
+                    //"CREATE (p:Person {PersonId: $PersonId, Name: $Name, Birthday: $Birthday})",
+                    //new { person.PersonId, person.DisplayName, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
+                    //);
+                }
+            });
+            
 
             // Create relationships
             foreach (var relationship in relationships)
@@ -201,7 +209,9 @@ public class FamilyRepository : IFamilyRepository
                     var relationship = new Relationship
                     {
                         From = person.PersonId,
+                        FromType = "Person",
                         To = relatedPerson.PersonId,
+                        ToType = "Person",
                         Type = record["relationshipType"].As<string>()
                     };
 
@@ -296,10 +306,8 @@ public class FamilyRepository : IFamilyRepository
         try
         {
             // Create the person node
-            await session.RunAsync(
-                "CREATE (p:Person {PersonId: $PersonId, Name: $Name, Birthday: $Birthday})",
-                new { person.PersonId, person.DisplayName, Birthday = person.Birthday.ToString("yyyy-MM-dd") }
-            );
+            var personProperties = personNodeService.ToProperties(person);
+            var result = await session.RunAsync("CREATE (p:Person $props)", new { props = personProperties });
 
             // Create relationships
             foreach (var relationship in relationships)
@@ -319,52 +327,4 @@ public class FamilyRepository : IFamilyRepository
         }
     }
 
-
-
-
-    //public async Task<D3Graph> FetchD3Graph(int limit)
-    //{
-    //    var (queryResults, _) = await _driver
-    //        .ExecutableQuery(@"
-    //            MATCH (m:Movie)<-[:ACTED_IN]-(p:Person)
-    //            WITH m, p
-    //            ORDER BY m.title, p.name
-    //            RETURN m.title AS title, collect(p.name) AS cast
-    //            LIMIT $limit")
-    //        .WithParameters(new { limit })
-    //        .WithConfig(_queryConfig)
-    //        .ExecuteAsync();
-
-    //    var nodes = new List<D3Node>();
-    //    var links = new List<D3Link>();
-
-    //    foreach (var record in queryResults)
-    //    {
-    //        var movie = new D3Node(record["title"].As<string>(), "movie");
-    //        var movieIndex = nodes.Count;
-    //        nodes.Add(movie);
-    //        foreach (var actorName in record["cast"].As<IList<string>>())
-    //        {
-    //            var actor = new D3Node(actorName, "actor");
-    //            var actorIndex = nodes.IndexOf(actor);
-    //            actorIndex = actorIndex == -1 ? nodes.Count : actorIndex;
-    //            nodes.Add(actor);
-    //            links.Add(new D3Link(actorIndex, movieIndex));
-    //        }
-    //    }
-
-    //    return new D3Graph(nodes, links);
-    //}
-
-    //private static IEnumerable<Person> MapCast(IEnumerable<IDictionary<string, object>> persons)
-    //{
-    //    return persons
-    //        .Select(
-    //            dictionary =>
-    //                new Person(
-    //                    dictionary["name"].As<string>(),
-    //                    dictionary["job"].As<string>(),
-    //                    dictionary["role"].As<string>()))
-    //        .ToList();
-    //}
 }

@@ -15,7 +15,7 @@ public class Person
     public string BirthLocation { get; set; }
     public DateTime? Birthday { get; set; }
     public DateTime PersonCreatedTimeStamp { get; set; }
-    public Guid? UserId { get; set; }
+    public Guid UserId { get; set; }
     public Guid CreatedById { get; set; }
 
     // New Person
@@ -23,10 +23,12 @@ public class Person
         Guid createdById, 
         string name, 
         DateTime? birthday,
-        string birthLocation = ""
+        string birthLocation = "",
+        bool isUser = false
         )
     {
-        PersonId = new Guid();
+        if (isUser) UserId = createdById;
+        PersonId = Guid.NewGuid();
         CreatedById = createdById;
         DisplayName = name;
         Birthday = birthday;

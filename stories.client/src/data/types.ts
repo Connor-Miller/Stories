@@ -34,4 +34,6 @@ export interface RequestOptions {
 export interface AppUser {
     email: string;
     displayName: string;
+    ipAddress?: string;
+    userAgent?: string;
 }

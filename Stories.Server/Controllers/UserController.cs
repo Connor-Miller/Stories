@@ -36,22 +36,25 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login(CreateUserRequest request)
+    public async Task<IActionResult> Login(CreateUserRequest request)
     {
         // Return Logged in user if already created
-        var user = _userRepository.GetUserByEmail(request.Email);
+        var user = await _userRepository.GetUserByEmail(request.Email);
         if (user != null) return Ok(user);
 
         // Create User if first time login
-        User newUser = _userRepository.CreateUser(request);
-
+        User newUser = await _userRepository.CreateUser(request);
         if (newUser == null) return BadRequest("User could not be found or created");
 
         // Create the corresponding Person
-        var person = new Person(newUser.UserId, newUser.DisplayName, null);
-        var newPerson = _personRepository.CreatePerson(person);
+        Person person = new Person(newUser.UserId, newUser.DisplayName, null, null, true);
+        Person newPerson = await _personRepository.CreatePerson(person);
+        if (newPerson == null) return BadRequest("Person could not be created");
 
-        return BadRequest("User could not be found or created");
+        // Create a Relationship from New User to New Person
+        await _userRepository.AddUserFollowRelationship(newUser.UserId, newPerson.PersonId, "IsPerson");
+
+        return Ok(newUser);
     }
  
 
