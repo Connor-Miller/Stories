@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core';
+import { Button, Image } from '@mantine/core';
 import { signInWithPopup } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { auth, provider } from './firebaseConfig';
@@ -8,6 +8,7 @@ import { AppUser } from '../../data/types';
 import { useAuth } from './AuthContext';
 import { fetchToken } from '../../data/jwt';
 
+import './SignInWithGoogle.css';
 
 interface SignInWithGoogleProps {
     onSuccess?: (user: any) => void;
@@ -55,8 +56,18 @@ const SignInWithGoogle: React.FC<SignInWithGoogleProps> = ({ onSuccess, onError 
     };
 
     return (
-        <Button onClick={handleSignIn}>
-            Sign in with Google
+        <Button
+            onClick={() => handleSignIn() }
+            variant="outline"
+            fullWidth
+            mb="md"
+            leftSection={
+                <div className="google-button">
+                    <Image src="/google.png" alt="Google" width={20} height={20} />
+                </div>
+            }
+        >
+            Login with Google
         </Button>
     );
 };

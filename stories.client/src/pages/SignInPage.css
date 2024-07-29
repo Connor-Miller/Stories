@@ -1,0 +1,12 @@
+.image-side {
+    height: 95vh;
+    max-height: 1000px;
+    background-color: #4ECDC4;
+    background: url('/background/family-bg.png')
+}
+.signin-container {
+    height: 95vh;
+}
+.signin-grid {
+    height: 95vh;
+}

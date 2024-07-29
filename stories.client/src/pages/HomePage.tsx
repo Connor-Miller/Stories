@@ -3,7 +3,6 @@ import HiddenDetails from "../components/home/HiddenDetails";
 import SignInWithGoogle from "../components/login/SignInWithGoogle";
 
 import './HomePage.css';
-import FamilyLegacyComponent from "./OurLegacy";
 
 const HomePage: React.FC = () => {
 
@@ -11,7 +10,6 @@ const HomePage: React.FC = () => {
 
     return (
         <div className="home">
-            <FamilyLegacyComponent />
             <DiscoverFamily />
             <HiddenDetails />
             <SignInWithGoogle

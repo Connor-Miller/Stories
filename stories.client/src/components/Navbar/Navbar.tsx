@@ -11,7 +11,6 @@ import {
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './Navbar.module.css';
-import { useAuth } from '../login/AuthContext';
 
 const data = [
     { link: '/', label: 'Home', icon: IconHome },
@@ -26,7 +25,7 @@ type NavbarProps = {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ toggle }) => {
-    const auth = useAuth();
+    //const auth = useAuth();
 
     const [active, setActive] = useState('Home');
 

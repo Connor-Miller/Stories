@@ -1,6 +1,13 @@
-import { Container, Paper, Stack, Text, Title } from '@mantine/core';
+﻿import {
+    Box,
+    Container,
+    Grid,
+    Text,
+    Title
+} from '@mantine/core';
 import React from 'react';
 import SignInWithGoogle from '../components/login/SignInWithGoogle';
+import './SignInPage.css';
 
 const SignInPage: React.FC = () => {
 
@@ -13,20 +20,42 @@ const SignInPage: React.FC = () => {
     }
      
     return (
-        <Container size="xs" mt="xl">
-            <Paper radius="md" p="xl" withBorder>
-                <Stack align="center">
-                    <Title order={2}>Welcome to Our Legacy</Title>
-                    <Text size="md">
-                        Sign in to access your account and preserve your legacy.
-                    </Text>
-                    <SignInWithGoogle
-                        onSuccess={(data) => onSignInSuccess(data)}
-                        onError={(error) => onSignInError(error)}
-                    />
-                </Stack>
-            </Paper>
+        <Container size="xl" p={0} className="signin-container">
+            <Grid gutter={0} className="signin-grid">
+                <Grid.Col
+                    span={{ base: 6, md: 12 }}
+                    className="image-side"
+                >
+                    {/*<Box p="xl" h="100%">*/}
+                    {/*    <Stack justify="space-between" h="100%">*/}
+                    {/*        <div>*/}
+                    {/*            <Title order={1} mb="xl">Our Legacy</Title>*/}
+                    {/*            <Text size="lg">*/}
+                    {/*                Make memories,<br />*/}
+                    {/*                Save the experience,<br />*/}
+                    {/*                Relive the joy,<br />*/}
+                    {/*                At the touch of you fingertips!*/}
+                    {/*            </Text>*/}
+                    {/*        </div>*/}
+                    {/*    </Stack>*/}
+                    {/*</Box>*/}
+                </Grid.Col>
+                <Grid.Col span={{ base: 6, md: 12 }}>
+                    <Box p="xl">
+                        <Title order={2} mb="md">Welcome Back!</Title>
+                        <Text mb="lg">Continue with Google to get started.</Text>
+
+                        <SignInWithGoogle
+                            onSuccess={onSignInSuccess}
+                            onError={onSignInError}
+                        />
+
+
+                    </Box>
+                </Grid.Col>
+            </Grid>
         </Container>
+
     );
 };
 

@@ -1,6 +1,6 @@
 // src/components/SignIn.tsx
 import { Button } from '@mantine/core';
-import { GoogleAuthProvider, getRedirectResult, signInWithRedirect } from "firebase/auth";
+import { getRedirectResult, signInWithRedirect } from "firebase/auth";
 import React, { useEffect } from 'react';
 import { auth, provider } from './firebaseConfig';
 
@@ -11,8 +11,8 @@ const SignIn: React.FC = () => {
             try {
                 const result = await getRedirectResult(auth);
                 if (result) {
-                    const credential = GoogleAuthProvider.credentialFromResult(result);
-                    const token = credential?.accessToken;
+                    //const credential = GoogleAuthProvider.credentialFromResult(result);
+                    //const token = credential?.accessToken;
                     const user = result.user;
 
                     console.log("User Info from redirect:", user);
