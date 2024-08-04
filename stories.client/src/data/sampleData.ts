@@ -16,17 +16,55 @@ export const samplePeople: Person[] = [
                 id: "102",
                 title: "The Second Adventure",
                 storyText: "In his second adventure, John faced many challenges..."
+            },
+            {
+                id: "103",
+                title: "The Third Adventure",
+                storyText: "Once upon a time, John had his first adventure..."
+            },
+            {
+                id: "104",
+                title: "The Fourth Adventure",
+                storyText: "In his second adventure, John faced many challenges..."
+            },
+            {
+                id: "105",
+                title: "The Fifth Adventure",
+                storyText: "Once upon a time, John had his first adventure..."
+            },
+            {
+                id: "106",
+                title: "The Sixth Adventure",
+                storyText: "In his second adventure, John faced many challenges..."
+            },
+            {
+                id: "107",
+                title: "The Seventh Adventure",
+                storyText: "In his second adventure, John faced many challenges..."
+            },
+            {
+                id: "108",
+                title: "The Eighth Adventure",
+                storyText: "Once upon a time, John had his first adventure..."
+            },
+            {
+                id: "109",
+                title: "The Ninth Adventure",
+                storyText: "In his second adventure, John faced many challenges..."
             }
         ],
         relatives: [
             {
-                id: "2",
-                name: "Jane Doe",
-                gender: undefined,
-                birthday: undefined,
-                stories: [],
-                relatives: []
-            }
+                person: {
+                    id: "2",
+                    name: "Jane Doe",
+                    gender: undefined,
+                    birthday: undefined,
+                    stories: [],
+                    relatives: []
+                },
+                relation: "Sister"
+            },
         ]
     },
     {
@@ -43,13 +81,16 @@ export const samplePeople: Person[] = [
         ],
         relatives: [
             {
-                id: "1",
-                name: "John Doe",
-                gender: undefined,
-                birthday: undefined,
-                stories: [],
-                relatives: []
-            }
+                person: {
+                    id: "1",
+                    name: "John Doe",
+                    gender: undefined,
+                    birthday: undefined,
+                    stories: [],
+                    relatives: []
+                },
+                relation: "Brother"
+            },
         ]
     },
     {
@@ -66,13 +107,16 @@ export const samplePeople: Person[] = [
         ],
         relatives: [
             {
-                id: "4",
-                name: "Emily Davis",
-                gender: undefined,
-                birthday: undefined,
-                stories: [],
-                relatives: []
-            }
+                person: {
+                    id: "",
+                    name: "Emily Davis",
+                    gender: undefined,
+                    birthday: undefined,
+                    stories: [],
+                    relatives: []
+                },
+                relation: "Wife"
+            },
         ]
     },
     {
@@ -89,13 +133,16 @@ export const samplePeople: Person[] = [
         ],
         relatives: [
             {
-                id: "3",
-                name: "Michael Johnson",
-                gender: undefined,
-                birthday: undefined,
-                stories: [],
-                relatives: []
-            }
+                person: {
+                    id: "2",
+                    name: "Jane Doe",
+                    gender: undefined,
+                    birthday: undefined,
+                    stories: [],
+                    relatives: []
+                },
+                relation: "Mom"
+            },
         ]
     }
 ];

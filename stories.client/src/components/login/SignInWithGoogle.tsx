@@ -67,7 +67,7 @@ const SignInWithGoogle: React.FC<SignInWithGoogleProps> = ({ onSuccess, onError 
                 </div>
             }
         >
-            Login with Google
+            Sign in with Google
         </Button>
     );
 };

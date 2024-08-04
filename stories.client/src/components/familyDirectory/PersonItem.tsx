@@ -1,7 +1,7 @@
-import { Avatar, Group, Select, Table, Text, rem } from '@mantine/core';
-import React from 'react';
+﻿import React from 'react';
 import { Person } from '../../data/types';
-import { IconBook, IconDots, IconFriends } from '@tabler/icons-react';
+import './PersonItem.css';
+import { Container } from '@mantine/core';
 
 interface PersonItemProps {
     person: Person;
@@ -9,61 +9,85 @@ interface PersonItemProps {
 
 const PersonItem: React.FC<PersonItemProps> = ({ person }) => {
 
-    // Transform person.stories to the format expected by Select component
-    const storyOptions = person.stories?.map(story => ({
-        value: story.id,
-        label: story.title
-    }));
-    // Transform person.relatives to the format expected by Select component
-    const relativeOptions = person.relatives?.map(relative => ({
-        value: relative.id,
-        label: relative.name
-    }));
-
-    const friendsIcon = <IconFriends style={{ width: rem(16), height: rem(16) }} />;
-    const bookIcon = <IconBook style={{ width: rem(16), height: rem(16) }} />;
-
+    const handleTagClick = (type: 'story' | 'relative', id: string) => {
+        console.log(`Clicked ${type} with id: ${id}`);
+        // Implement your click logic here
+    };
+    const handleAddNew = (type: 'story' | 'relative') => {
+        console.log(`Add new ${type}`);
+        // Implement your logic to add a new story or relative
+    };
 
     return (
-        <Table.Tr key={person.id} >
-            <Table.Td>
-                <Group gap="sm">
-                    <Avatar size={40} src="./user.png" radius={40} />
-                    <div>
-                        <Text fz="sm" fw={500}>
-                            {person.name}
-                        </Text>
-                        <Text fz="xs" c="dimmed">
-                            {person.birthday?.toLocaleDateString()}
-                        </Text>
+        <Container
+
+            className="rounded-lg border border-gray-100 bg-white p-6 shadow-md transition-shadow duration-300 hover:shadow-lg"
+        >
+            <div className="flex justify-between items-start mb-4">
+                <div>
+                    <h2 className="font-semibold text-xl text-gray-800 mb-1">{person.name}</h2>
+                </div>
+                <span className="text-sm text-gray-500 bg-blue-50 px-3 py-1 rounded-full">
+                    {person.birthday?.toLocaleDateString() ?? "No Birthday listed"}
+                </span>
+            </div>
+            {person.stories && person.stories.length > 0 && (
+                <div className="mb-4">
+                    <h3 className="text-sm font-medium text-gray-700 mb-2">Stories</h3>
+                    <div className="flex flex-wrap gap-2 max-h-24 overflow-y-auto relative pb-8">
+                        {person.stories.map((story) => (
+                            <button
+                                key={story.id}
+                                onClick={() => handleTagClick('story', story.id)}
+                                className="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium
+                           hover:bg-indigo-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            >
+                                {story.title}
+                            </button>
+                        ))}
+                        <button
+                            onClick={() => handleAddNew('story')}
+                            className="bottom-0 left-0 bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium
+                           hover:bg-indigo-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                            +
+                        </button>
                     </div>
-                </Group>
-            </Table.Td>
-            <Table.Td>
-                <Select
-                    data={relativeOptions}
-                    placeholder={`${relativeOptions?.length} relatives added`}
-                    allowDeselect={false}
-                    leftSection={friendsIcon}
-                    searchable
-                    nothingFoundMessage="Nothing found..."
-                />
-            </Table.Td>
-            <Table.Td>
-                <Select
-                    data={storyOptions}
-                    placeholder={`${storyOptions?.length} stories added`}
-                    allowDeselect={false}
-                    leftSection={bookIcon}
-                    searchable
-                    nothingFoundMessage="Nothing found..."
-                />
-            </Table.Td>
-            <Table.Td>
-                <IconDots />
-            </Table.Td>
-            
-        </Table.Tr>
+                </div>
+            )}
+            {person.relatives && person.relatives.length > 0 && (
+                <div>
+                    <h3 className="text-sm font-medium text-gray-700 mb-2">Relatives</h3>
+                    <div className="flex flex-wrap gap-2 max-h-24 overflow-y-auto relative pb-8">
+                        {person.relatives.map((relative) => (
+                            <button
+                                style={{
+                                    backgroundColor: 'var(--mantine-color-green-1)',
+                                    color: 'var(--mantine-color-green-9)'
+                                }}
+                                key={relative.person.id}
+                                onClick={() => handleTagClick('relative', relative.person.id)}
+                                className="text-green-700 px-3 py-1 rounded-full text-xs font-medium
+                           hover:bg-green-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+                            >
+                                {relative.person.name} ({relative.relation})
+                            </button>
+                        ))}
+                        <button
+                            style={{
+                                backgroundColor: 'var(--mantine-color-green-1)',
+                                color: 'var(--mantine-color-green-9)'
+                            }}
+                            onClick={() => handleAddNew('relative')}
+                            className="bottom-0 left-0 text-green-700 px-3 py-1 rounded-full text-xs font-medium
+                           hover:bg-green-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        >
+                            +
+                        </button>
+                    </div>
+                </div>
+            )}
+        </Container>
     );
 };
 

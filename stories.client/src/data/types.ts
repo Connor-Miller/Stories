@@ -11,7 +11,7 @@ export interface Person {
     gender?: string;
     birthday?: Date;
     stories?: Story[];
-    relatives?: Person[];
+    relatives?: Relative[];
 }
 export interface Story {
     id: string;
@@ -36,4 +36,8 @@ export interface AppUser {
     displayName: string;
     ipAddress?: string;
     userAgent?: string;
+}
+export interface Relative {
+    person: Person;
+    relation: string;
 }
