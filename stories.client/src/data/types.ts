@@ -17,6 +17,9 @@ export interface Story {
     id: string;
     title: string;
     storyText?: string;
+    storyDate?: Date;
+    storyLocation?: string;
+    storyTags?: string[];
 }
 export interface Relationship {
     fromId: string;

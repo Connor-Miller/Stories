@@ -1,7 +1,8 @@
 ﻿import React from 'react';
-import { Person } from '../../data/types';
+import { Person, Story } from '../../data/types';
 import './PersonItem.css';
 import { Container } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 
 interface PersonItemProps {
     person: Person;
@@ -9,13 +10,14 @@ interface PersonItemProps {
 
 const PersonItem: React.FC<PersonItemProps> = ({ person }) => {
 
-    const handleTagClick = (type: 'story' | 'relative', id: string) => {
-        console.log(`Clicked ${type} with id: ${id}`);
-        // Implement your click logic here
+    const navigate = useNavigate();
+
+    const handleTagClick = (type: 'story' | 'relative', data: Story | Person) => {
+        navigate(`/${type}`, { state: { initialData: data, readOnly: true } });
     };
+
     const handleAddNew = (type: 'story' | 'relative') => {
-        console.log(`Add new ${type}`);
-        // Implement your logic to add a new story or relative
+        navigate(`/${type}`, { state: { initialData: {}, readOnly: false } });
     };
 
     return (
@@ -38,7 +40,7 @@ const PersonItem: React.FC<PersonItemProps> = ({ person }) => {
                         {person.stories.map((story) => (
                             <button
                                 key={story.id}
-                                onClick={() => handleTagClick('story', story.id)}
+                                onClick={() => handleTagClick('story', story)}
                                 className="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium
                            hover:bg-indigo-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             >
@@ -66,7 +68,7 @@ const PersonItem: React.FC<PersonItemProps> = ({ person }) => {
                                     color: 'var(--mantine-color-green-9)'
                                 }}
                                 key={relative.person.id}
-                                onClick={() => handleTagClick('relative', relative.person.id)}
+                                onClick={() => handleTagClick('relative', relative.person)}
                                 className="text-green-700 px-3 py-1 rounded-full text-xs font-medium
                            hover:bg-green-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                             >

@@ -5,12 +5,14 @@ import FamilyTree from './pages/familyTree/FamilyTree';
 import './Router.css';
 import HomePage from './pages/HomePage';
 import SignInPage from './pages/SignInPage';
+import StoryPage from './pages/story/StoryPage';
 
 const router = [
     {path: '/', element: <HomePage />, },
     { path: '/tree', element: <FamilyTree />, },
     { path: '/directory', element: <FamilyDirectory />, },
     { path: '/signin', element: <SignInPage /> },
+    { path: '/story', element: <StoryPage />}
 ];
 
 export function Router() {

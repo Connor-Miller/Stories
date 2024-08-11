@@ -1,58 +1,55 @@
 import { Person, Story } from "./types";
 
+export const sampleStories: Story[] = [
+    {
+        id: "101",
+        title: "Summer Adventure in the Rockies",
+        storyText: "<p>Last summer, we embarked on an unforgettable journey through the Rocky Mountains. The crisp mountain air and breathtaking vistas left us in awe at every turn...</p>",
+        storyDate: new Date("2023-07-15"),
+        storyLocation: "Rocky Mountains, Colorado",
+        storyTags: ["adventure", "nature", "family", "hiking"]
+    },
+    {
+        id: "102",
+        title: "A Culinary Tour of Italy",
+        storyText: "<p>Our gastronomic adventure through Italy was a feast for the senses. From the rich pasta dishes of Rome to the delicate seafood of Venice, every meal was a celebration...</p>",
+        storyDate: new Date("2023-09-05"),
+        storyLocation: "Various cities, Italy",
+        storyTags: ["food", "travel", "culture"]
+    },
+    {
+        id: "103",
+        title: "The Day We Rescued a Stray Cat",
+        storyText: "<p>It was a rainy Tuesday when we found her - a small, trembling ball of fur huddled under a parked car. Little did we know how much joy this little stray would bring to our lives...</p>",
+        storyDate: new Date("2024-03-20"),
+        storyLocation: "Our Neighborhood",
+        storyTags: ["pets", "kindness", "family"]
+    },
+    {
+        id: "104",
+        title: "Grandpa's World War II Stories",
+        storyText: "<p>On his 90th birthday, Grandpa finally opened up about his experiences in World War II. His tales of bravery, camaraderie, and survival left us all in silent awe...</p>",
+        storyDate: new Date("2023-11-11"),
+        storyLocation: "Grandpa's House",
+        storyTags: ["history", "family", "memories"]
+    },
+    {
+        id: "105",
+        title: "Our First Attempt at Urban Gardening",
+        storyText: "<p>With nothing but a small balcony and boundless enthusiasm, we decided to start our own urban garden. Through trial, error, and a lot of YouTube tutorials, we managed to grow our first tomatoes...</p>",
+        storyDate: new Date("2024-04-01"),
+        storyLocation: "Home",
+        storyTags: ["gardening", "learning", "sustainability"]
+    }
+];
 export const samplePeople: Person[] = [
     {
         id: "1",
         name: "John Doe",
         gender: "Male",
         birthday: new Date("1990-01-01"),
-        stories: [
-            {
-                id: "101",
-                title: "The First Adventure",
-                storyText: "Once upon a time, John had his first adventure..."
-            },
-            {
-                id: "102",
-                title: "The Second Adventure",
-                storyText: "In his second adventure, John faced many challenges..."
-            },
-            {
-                id: "103",
-                title: "The Third Adventure",
-                storyText: "Once upon a time, John had his first adventure..."
-            },
-            {
-                id: "104",
-                title: "The Fourth Adventure",
-                storyText: "In his second adventure, John faced many challenges..."
-            },
-            {
-                id: "105",
-                title: "The Fifth Adventure",
-                storyText: "Once upon a time, John had his first adventure..."
-            },
-            {
-                id: "106",
-                title: "The Sixth Adventure",
-                storyText: "In his second adventure, John faced many challenges..."
-            },
-            {
-                id: "107",
-                title: "The Seventh Adventure",
-                storyText: "In his second adventure, John faced many challenges..."
-            },
-            {
-                id: "108",
-                title: "The Eighth Adventure",
-                storyText: "Once upon a time, John had his first adventure..."
-            },
-            {
-                id: "109",
-                title: "The Ninth Adventure",
-                storyText: "In his second adventure, John faced many challenges..."
-            }
-        ],
+        stories: sampleStories
+        ,
         relatives: [
             {
                 person: {
@@ -145,11 +142,4 @@ export const samplePeople: Person[] = [
             },
         ]
     }
-];
-export const sampleStories: Story[] = [
-    { id: '101', title: 'The First Adventure', storyText: 'Once upon a time, John had his first adventure...' },
-    { id: '102', title: 'The Second Adventure', storyText: 'In his second adventure, John faced many challenges...' },
-    { id: '103', title: 'The Beginning', storyText: "Jane's story began in a small town..." },
-    { id: '104', title: 'The Journey', storyText: 'Michael embarked on a long journey across the country...' },
-    { id: '105', title: 'A New Beginning', storyText: 'Emily started a new chapter in her life...' }
 ];

@@ -1,22 +1,25 @@
-﻿import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import {
+﻿import {
     AppShell,
     MantineColorsTuple,
     MantineProvider,
     createTheme
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './Router';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
+import { AuthProvider } from './components/login/AuthContext';
+
 
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
-import './App.css';
 import '@mantine/core/styles.css';
-import { AuthProvider } from './components/login/AuthContext';
+import '@mantine/tiptap/styles.css';
+import './App.css';
+
 
 
 function App() {
