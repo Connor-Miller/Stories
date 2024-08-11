@@ -1,24 +1,13 @@
-import React, { useState, useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Container, Group, Text, TextInput, Button, useMantineTheme, ActionIcon, Tooltip } from '@mantine/core';
+import { ActionIcon, Box, Button, Container, Group, Text, TextInput, Tooltip } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { RichTextEditor } from '@mantine/tiptap';
-import { useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
-import Link from '@tiptap/extension-link';
-import Superscript from '@tiptap/extension-superscript';
-import SubScript from '@tiptap/extension-subscript';
-import Highlight from '@tiptap/extension-highlight';
-import TextAlign from '@tiptap/extension-text-align';
-import { IconEdit, IconDownload, IconTag, IconX } from '@tabler/icons-react';
+import { IconDownload, IconEdit, IconTag, IconX } from '@tabler/icons-react';
+import React, { useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import StoryEditor from '../../components/story/StoryEditor';
 import './StoryPage.css';
 
 const StoryPage: React.FC = () => {
-    const theme = useMantineTheme();
     const location = useLocation();
-    const navigate = useNavigate();
     const initialData = location.state?.initialData || {};
     const [readOnly, setReadOnly] = useState(location.state?.readOnly || false);
 
@@ -30,19 +19,7 @@ const StoryPage: React.FC = () => {
 
     const [newTag, setNewTag] = useState('');
 
-    const editor = useEditor({
-        extensions: [
-            StarterKit,
-            Underline,
-            Link,
-            Superscript,
-            SubScript,
-            Highlight,
-            TextAlign.configure({ types: ['heading', 'paragraph'] }),
-        ],
-        content: content,
-        editable: !readOnly,
-    });
+
 
     const handleAddTag = () => {
         if (newTag && newTag.length <= 50 && !tags.includes(newTag)) {
@@ -63,11 +40,10 @@ const StoryPage: React.FC = () => {
 
     const toggleEditMode = useCallback(() => {
         if (!readOnly) {
-            console.log('Saving changes:', { title, storyLocation, date, tags, content: editor?.getHTML() });
+            console.log('Saving changes:', { title, storyLocation, date, tags, content });
         }
         setReadOnly(!readOnly);
-        editor?.setEditable(!readOnly);
-    }, [readOnly, title, storyLocation, date, tags, editor]);
+    }, [readOnly, title, storyLocation, date, tags, content]);
 
     return (
         <Container size="lg" className="story-page">
@@ -128,13 +104,7 @@ const StoryPage: React.FC = () => {
             </Group>
 
             <Box mb="xl" className="story-content">
-                {readOnly ? (
-                    <RichTextEditor editor={editor} className="story-editor">
-                        <RichTextEditor.Content />
-                    </RichTextEditor>
-                ) : (
-                    <StoryEditor content={content} />
-                )}
+                <StoryEditor content={content} setContent={setContent} readOnly={readOnly} />
             </Box>
 
             <Box mb="md" className="tag-container">

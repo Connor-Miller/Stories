@@ -1,5 +1,5 @@
 import { RichTextEditor, Link } from '@mantine/tiptap';
-import { useEditor } from '@tiptap/react';
+import { Editor, useEditor } from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -9,9 +9,11 @@ import SubScript from '@tiptap/extension-subscript';
 
 interface StoryEditorProps {
     content: string;
+    setContent: any;
+    readOnly: boolean;
 }
 
-const StoryEditor: React.FC<StoryEditorProps> = ({ content }) => {
+const StoryEditor: React.FC<StoryEditorProps> = ({ content, setContent, readOnly }) => {
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -22,7 +24,12 @@ const StoryEditor: React.FC<StoryEditorProps> = ({ content }) => {
             Highlight,
             TextAlign.configure({ types: ['heading', 'paragraph'] }),
         ],
-        content,
+        content: content,
+        editable: !readOnly,
+        onUpdate: ({ editor }: { editor: Editor }) => {
+            const html = editor.getHTML();
+            setContent(html);
+        },
     });
 
     return (
