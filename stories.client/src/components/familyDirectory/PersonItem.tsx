@@ -12,11 +12,11 @@ const PersonItem: React.FC<PersonItemProps> = ({ person }) => {
 
     const navigate = useNavigate();
 
-    const handleTagClick = (type: 'story' | 'relative', data: Story | Person) => {
+    const handleTagClick = (type: 'story' | 'person', data: Story | Person) => {
         navigate(`/${type}`, { state: { initialData: data, readOnly: true } });
     };
 
-    const handleAddNew = (type: 'story' | 'relative') => {
+    const handleAddNew = (type: 'story' | 'person') => {
         navigate(`/${type}`, { state: { initialData: {}, readOnly: false } });
     };
 
@@ -68,7 +68,7 @@ const PersonItem: React.FC<PersonItemProps> = ({ person }) => {
                                     color: 'var(--mantine-color-green-9)'
                                 }}
                                 key={relative.person.id}
-                                onClick={() => handleTagClick('relative', relative.person)}
+                                onClick={() => handleTagClick('person', relative.person)}
                                 className="text-green-700 px-3 py-1 rounded-full text-xs font-medium
                            hover:bg-green-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                             >
@@ -80,7 +80,7 @@ const PersonItem: React.FC<PersonItemProps> = ({ person }) => {
                                 backgroundColor: 'var(--mantine-color-green-1)',
                                 color: 'var(--mantine-color-green-9)'
                             }}
-                            onClick={() => handleAddNew('relative')}
+                            onClick={() => handleAddNew('person')}
                             className="bottom-0 left-0 text-green-700 px-3 py-1 rounded-full text-xs font-medium
                            hover:bg-green-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                         >
