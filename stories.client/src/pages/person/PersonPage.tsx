@@ -14,7 +14,7 @@ const PersonPage: React.FC = () => {
     const [gender, setGender] = useState(initialData?.gender || '');
     const [birthday, setBirthday] = useState<Date | null>(initialData?.birthday || null);
     const [stories, setStories] = useState<string[]>(initialData?.stories || []);
-    const [relatives, setRelatives] = useState<string[]>(initialData?.stories || []);
+    const [relatives, ] = useState<string[]>(initialData?.stories || []);
 
     const handleRemoveTag = (tagToRemove: string) => {
         setStories(stories.filter(tag => tag !== tagToRemove));
